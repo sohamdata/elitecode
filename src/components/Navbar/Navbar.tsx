@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 
-type NavbarProps = {
-};
+interface NavbarProps { };
 
 const Navbar: React.FC<NavbarProps> = () => {
     return (
