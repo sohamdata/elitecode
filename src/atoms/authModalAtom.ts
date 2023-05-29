@@ -4,7 +4,7 @@ import { atom } from "recoil";
 
 interface AuthModalState {
     isOpen: boolean;
-    mode: "login" | "register" | "forgotPassword";
+    mode: "login" | "signup" | "forgotPassword";
 };
 
 const initialState: AuthModalState = {
