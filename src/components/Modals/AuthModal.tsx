@@ -13,9 +13,11 @@ const AuthModal: React.FC<AuthModalProps> = () => {
     const setAuthModalState = useSetRecoilState(authModalState);
 
     const handleClick = () => {
-        console.log("sign in clicked");
-        setAuthModalState((prev) => ({ ...prev, isOpen: false }));
+        setAuthModalState((prev) => ({ ...prev, isOpen: false, mode: "login" }));
     }
+
+    console.log(authModalCurr);
+    console.log(setAuthModalState);
 
     return (
         <>

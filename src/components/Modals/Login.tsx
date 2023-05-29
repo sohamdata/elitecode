@@ -1,6 +1,19 @@
+import { authModalState } from '@/atoms/authModalAtom';
+import { useSetRecoilState } from 'recoil';
+
 interface Props { };
 
 const Login: React.FC<Props> = () => {
+    const setAuthModalState = useSetRecoilState(authModalState);
+
+    const handleClickSignup = () => {
+        setAuthModalState((prev) => ({ ...prev, mode: "signup" }));
+    }
+
+    const handleClickForgotPassword = () => {
+        setAuthModalState((prev) => ({ ...prev, mode: "forgotPassword" }));
+    }
+
     return (
         <form className="space-y-4 px-4 pb-4">
             <h1 className="text-center text-2xl text-white font-medium">Sign in to EliteCode</h1>
@@ -17,9 +30,13 @@ const Login: React.FC<Props> = () => {
                 />
             </div>
             <button type="submit" className="py-2 w-full rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300">Log in</button>
-            <button className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline">Forgor password?</button>
+            <button className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline"
+                onClick={handleClickForgotPassword}
+            >Forgor password?</button>
             <div>
-                <p className="text-center text-white">Don't have an account? <a href="#" className="text-brand-orange hover:underline">Sign up</a></p>
+                <p className="text-center text-white cursor-pointer">Don't have an account? <a className="text-brand-orange hover:underline"
+                    onClick={handleClickSignup}
+                >Sign up</a></p>
             </div>
         </form>
     )

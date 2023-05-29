@@ -9,7 +9,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     const setAuthModalState = useSetRecoilState(authModalState);
 
     const handleClick = () => {
-        console.log("sign in clicked");
         setAuthModalState((prev) => ({ ...prev, isOpen: true }));
     }
 
