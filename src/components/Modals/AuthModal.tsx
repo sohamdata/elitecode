@@ -4,16 +4,24 @@ import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
 import { authModalState } from '@/atoms/authModalAtom';
 import { useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 interface AuthModalProps { };
 
 const AuthModal: React.FC<AuthModalProps> = () => {
     const authModalCurr = useRecoilValue(authModalState);
+    const setAuthModalState = useSetRecoilState(authModalState);
+
+    const handleClick = () => {
+        console.log("sign in clicked");
+        setAuthModalState((prev) => ({ ...prev, isOpen: false }));
+    }
 
     return (
         <>
             <div
                 className='absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black opacity-50'
+                onClick={handleClick}
             ></div>
             <div className='w-full sm:w-[450px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-center items-center'>
                 <div className='relative w-full h-full mx-auto flex items-center justify-center'>
@@ -22,6 +30,7 @@ const AuthModal: React.FC<AuthModalProps> = () => {
                             <button
                                 type='button'
                                 className='bg-transparent rounded-lg text-sm p-2 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white text-white'
+                                onClick={handleClick}
                             >
                                 <IoClose className='w-5 h-5' />
                             </button>
