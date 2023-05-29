@@ -31,7 +31,7 @@ const AuthModal: React.FC<AuthModalProps> = () => {
                         <div className='flex justify-end p-2'>
                             <button
                                 type='button'
-                                className='bg-transparent rounded-lg text-sm p-2 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white text-white'
+                                className='bg-transparent rounded-lg text-sm p-2 ml-auto inline-flex items-center hover:bg-brand-orange-s hover:text-white text-white'
                                 onClick={handleClick}
                             >
                                 <IoClose className='w-5 h-5' />
