@@ -17,7 +17,7 @@ const Login: React.FC<Props> = () => {
                 />
             </div>
             <button type="submit" className="py-2 w-full rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300">Log in</button>
-            <button className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline">Forgot password?</button>
+            <button className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline">Forgor password?</button>
             <div>
                 <p className="text-center text-white">Don't have an account? <a href="#" className="text-brand-orange hover:underline">Sign up</a></p>
             </div>
