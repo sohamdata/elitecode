@@ -2,10 +2,18 @@ import { IoClose } from 'react-icons/io5';
 import Login from './Login';
 import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
+import { authModalState } from '@/atoms/authModalAtom';
+import { useSetRecoilState } from 'recoil';
 
 interface AuthModalProps { };
 
 const AuthModal: React.FC<AuthModalProps> = () => {
+    const setAuthModalState = useSetRecoilState(authModalState);
+
+    const handleClick = () => {
+        console.log("sign in clicked");
+        setAuthModalState((prev) => ({ ...prev, isOpen: false }));
+    }
     return (
         <>
             <div
@@ -18,6 +26,7 @@ const AuthModal: React.FC<AuthModalProps> = () => {
                             <button
                                 type='button'
                                 className='bg-transparent rounded-lg text-sm p-2 ml-auto inline-flex items-center hover:bg-gray-800 hover:text-white text-white'
+                                onClick={handleClick}
                             >
                                 <IoClose className='w-5 h-5' />
                             </button>
