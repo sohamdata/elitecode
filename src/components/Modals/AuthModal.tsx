@@ -3,8 +3,7 @@ import Login from './Login';
 import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
 import { authModalState } from '@/atoms/authModalAtom';
-import { useRecoilValue } from 'recoil';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface AuthModalProps { };
 
@@ -15,9 +14,6 @@ const AuthModal: React.FC<AuthModalProps> = () => {
     const handleClick = () => {
         setAuthModalState((prev) => ({ ...prev, isOpen: false, mode: "login" }));
     }
-
-    console.log(authModalCurr);
-    console.log(setAuthModalState);
 
     return (
         <>
