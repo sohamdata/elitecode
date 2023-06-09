@@ -3,10 +3,12 @@ import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
+import { useRouter } from 'next/router';
 
 interface Props { };
 
 const Signup: React.FC<Props> = () => {
+    const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -35,8 +37,15 @@ const Signup: React.FC<Props> = () => {
         }
     }
 
-    const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        try {
+            const newUser = await createUserWithEmailAndPassword(email, password);
+            if (!newUser) return;
+            router.push("/");
+        } catch (error: any) {
+            alert(error.message);
+        }
     }
 
     return (
@@ -58,9 +67,8 @@ const Signup: React.FC<Props> = () => {
             </div>
             <div>
                 <label htmlFor="password" className="my-2 block text-white">Confirm Password</label>
-                <input type="password" name="password" id="password" placeholder="same uniquely insecure password"
+                <input type="password" name="password" id="password2" placeholder="same uniquely insecure password"
                     className="p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
-                    onChange={handleInputChange}
                 />
             </div>
             <div>
