@@ -75,7 +75,7 @@ const Signup: React.FC<Props> = () => {
             </div>
             <div>
                 <label htmlFor="password" className="my-2 block text-white">Confirm Password</label>
-                <input type="password" name="password" id="password2" value={password} placeholder="same uniquely insecure password"
+                <input type="password" name="password" id="password2" placeholder="same uniquely insecure password"
                     className="p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
                 />
             </div>
