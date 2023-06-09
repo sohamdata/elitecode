@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         "brand-orange": "rgb(255,161,22)",
         "brand-orange-s": "rgb(193,122,15)",
+        "dark-layer-1": "rgb(40,40,40)",
+        "dark-layer-2": "rgb(26,26,26)",
+        "dark-label-2": "rgba(239,241,246,0.7)",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
