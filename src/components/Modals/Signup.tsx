@@ -46,6 +46,7 @@ const Signup: React.FC<Props> = () => {
             router.push("/");
         } catch (error: any) {
             alert(error.message);
+            setEmail("");
         }
     }
 
@@ -60,27 +61,27 @@ const Signup: React.FC<Props> = () => {
             <h1 className="text-center text-2xl text-white font-medium">Join EliteCode</h1>
             <div>
                 <label htmlFor="username" className="my-2 block text-white">Username</label>
-                <input type="username" name="username" id="username" placeholder="some_cool_username"
+                <input type="username" name="username" id="username" value={username} placeholder="some_cool_username"
                     className="p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
                     onChange={handleInputChange}
                 />
             </div>
             <div>
                 <label htmlFor="password" className="my-2 block text-white">Password</label>
-                <input type="password" name="password" id="password" placeholder="a uniquely insecure password"
+                <input type="password" name="password" id="password" value={password} placeholder="a uniquely insecure password"
                     className="p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
                     onChange={handleInputChange}
                 />
             </div>
             <div>
                 <label htmlFor="password" className="my-2 block text-white">Confirm Password</label>
-                <input type="password" name="password" id="password2" placeholder="same uniquely insecure password"
+                <input type="password" name="password" id="password2" value={password} placeholder="same uniquely insecure password"
                     className="p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
                 />
             </div>
             <div>
                 <label htmlFor="email" className="my-2 block text-white">Email</label>
-                <input type="email" name="email" id="email" placeholder="example@mail.com"
+                <input type="email" name="email" id="email" value={email} placeholder="example@mail.com"
                     className="mb-4 p-1.5 rounded-md outline-none border-5 w-full text-black sm:text-sm placeholder-gray-400"
                     onChange={handleInputChange}
                 />
