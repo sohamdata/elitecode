@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
@@ -39,6 +39,7 @@ const Signup: React.FC<Props> = () => {
 
     const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!username || !password || !email) return alert("we need all fields to send you spam mails.");
         try {
             const newUser = await createUserWithEmailAndPassword(email, password);
             if (!newUser) return;
@@ -47,6 +48,12 @@ const Signup: React.FC<Props> = () => {
             alert(error.message);
         }
     }
+
+    useEffect(() => {
+        if (error) {
+            alert(error.message);
+        }
+    }, [error]);
 
     return (
         <form className="space-y-4 px-4 pb-4" onSubmit={handleSignUp}>
@@ -78,7 +85,9 @@ const Signup: React.FC<Props> = () => {
                     onChange={handleInputChange}
                 />
             </div>
-            <button type="submit" className="py-2 w-full rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300">Signup</button>
+            <button type="submit" className="py-2 w-full rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300">
+                {loading ? "contacting the FBI..." : "Sign Up"}
+            </button>
             <div>
                 <p className="text-center text-white">Already have an account? <a href="#" className="text-brand-orange hover:underline"
                     onClick={handleClick}
