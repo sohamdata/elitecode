@@ -1,6 +1,7 @@
 import { MockProblems } from "@/MockProblems";
 import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
+import YoutubeVideo from "../Modals/YoutubeVideo";
 
 type Props = {};
 
@@ -27,8 +28,10 @@ const Table: React.FC<Props> = () => {
                         <td className="px-4 py-4">{!problem.videoId ? 'Coming Soon' : <a href={`https://www.youtube.com/watch?v=${problem.videoId}`} target="_blank" rel="noopener noreferrer"><AiFillYoutube size={20} className="hover:text-red-600" /></a>}</td>
                     </tr>
                 ))}
-
             </tbody>
+            <tfoot>
+                {/* <YoutubeVideo /> */}
+            </tfoot>
         </table>
     )
 }
