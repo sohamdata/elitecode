@@ -30,7 +30,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Medium",
         category: "Dynamic Programming",
         order: 3,
-        videoId: "dQw4w9WgXcQ",
+        videoId: "q5ANAl8Z458",
     },
     {
         id: "valid-parentheses",
