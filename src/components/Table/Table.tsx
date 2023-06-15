@@ -9,6 +9,17 @@ type Props = {};
 const Table: React.FC<Props> = () => {
     const [ytmodal, setYtmodal] = useState(false);
     const [videoId, setVideoId] = useState("");
+
+    const openVideoModal = (id: string) => {
+        setVideoId(id);
+        setYtmodal(true);
+    };
+
+    const closeVideoModal = () => {
+        setVideoId("");
+        setYtmodal(false);
+    };
+
     return (
         <>
             <table className='w-full max-w-[1200px] text-left mx-auto text-sm text-gray-400'>
@@ -30,13 +41,16 @@ const Table: React.FC<Props> = () => {
                             <td className={`px-4 py-4 ${problem.difficulty === "Easy" ? "text-green-600" : problem.difficulty === "Medium" ? "text-orange-500" : "text-red-500"}`}>{problem.difficulty}</td>
                             <td className="px-4 py-4">{problem.category}</td>
                             <td className="px-4 py-4">{!problem.videoId ? 'Coming Soon' :
-                                <AiFillYoutube size={20} className="hover:text-red-600 cursor-pointer" onClick={() => { setYtmodal(true); setVideoId(problem.videoId as string) }} />
+                                <AiFillYoutube
+                                    size={20} className="hover:text-red-600 cursor-pointer"
+                                    onClick={() => openVideoModal(problem.videoId as string)}
+                                />
                             }</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            {ytmodal && <YoutubeVideo videoId={videoId} />}
+            {ytmodal && <YoutubeVideo videoId={videoId} onClose={closeVideoModal} />}
         </>
     )
 }
