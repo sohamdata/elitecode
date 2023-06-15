@@ -1,9 +1,11 @@
 import { IoClose } from "react-icons/io5";
 import Youtube from "react-youtube";
 
-type Props = {};
+type Props = {
+    videoId: string;
+};
 
-const YoutubeVideo: React.FC<Props> = () => {
+const YoutubeVideo: React.FC<Props> = ({ videoId }) => {
     return (
         <>
             <div
@@ -22,7 +24,7 @@ const YoutubeVideo: React.FC<Props> = () => {
                         </div>
                         <div className='relative w-full'>
                             <Youtube
-                                videoId='dQw4w9WgXcQ'
+                                videoId={videoId}
                                 loading="lazy"
                                 iframeClassName='w-full min-h-[500px]'
                             />
