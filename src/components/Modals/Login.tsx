@@ -30,7 +30,7 @@ const Login: React.FC<Props> = () => {
                 setPassword(value);
                 break;
             case "email":
-                setEmail(value);
+                setEmail(value.toLowerCase());
                 break;
             default:
                 break;
