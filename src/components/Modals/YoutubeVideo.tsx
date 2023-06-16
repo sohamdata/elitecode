@@ -9,7 +9,7 @@ type Props = {
 const YoutubeVideo: React.FC<Props> = ({ videoId, onClose }) => {
     return (
         <>
-            <div className='fixed inset-0 flex items-center justify-center bg-black opacity-50' onClick={onClose}></div>
+            <div className='fixed inset-0 flex items-center justify-center bg-black opacity-50'></div>
             <div className='fixed inset-0 flex items-center justify-center'>
                 <div className='w-full sm:w-[800px]'>
                     <div className='flex justify-end p-2'>
@@ -21,7 +21,7 @@ const YoutubeVideo: React.FC<Props> = ({ videoId, onClose }) => {
                             <IoClose className='w-5 h-5' />
                         </button>
                     </div>
-                    <div className='relative w-full' style={{ paddingBottom: "56.25%" }}>
+                    <div className='pb-[500px] relative w-full'>
                         <Youtube
                             videoId={videoId}
                             loading="lazy"
