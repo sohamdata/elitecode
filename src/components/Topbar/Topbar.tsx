@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Tooltip } from 'react-tooltip';
 
 type Props = {};
 
@@ -27,7 +28,19 @@ const Topbar: React.FC<Props> = () => {
                     </Link>
                     :
                     (
-                        <Image src="/pfp.png" alt="profile image" width={32} height={32} className="cursor-pointer hover:opacity-80 transition duration-300" />
+                        <div data-tooltip-id="my-tooltip"
+                            data-tooltip-content={user.email ?? ""}
+                            data-tooltip-place="top"
+                        >
+                            <Tooltip id="my-tooltip" />
+                            <Image
+                                src="/pfp.png"
+                                alt="profile image"
+                                width={32}
+                                height={32}
+                                className="cursor-pointer hover:opacity-80 transition duration-300"
+                            />
+                        </div>
                     )
                 }
             </div>
