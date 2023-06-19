@@ -73,7 +73,7 @@ const Login: React.FC<Props> = () => {
                 />
             </div>
             <button type="submit" className="py-2 w-full rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300">
-                {loading ? "Loading..." : "Sign in"}
+                {loading ? "contacting the FBI..." : "Sign in"}
             </button>
             <button type="submit" className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline"
                 onClick={handleClickForgotPassword}
