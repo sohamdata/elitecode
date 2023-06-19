@@ -5,16 +5,23 @@ import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Tooltip } from 'react-tooltip';
 import UserProfile from "../Modals/UserProfile";
+import { authModalState } from '@/atoms/authModalAtom';
+import { useSetRecoilState } from 'recoil';
 
 type Props = {};
 
 const Topbar: React.FC<Props> = () => {
     const [user] = useAuthState(auth);
     const [showProfile, setShowProfile] = useState(false);
+    const setAuthModalState = useSetRecoilState(authModalState);
 
     const closeProfileModal = () => {
         setShowProfile(false);
     };
+
+    const handleClick = () => {
+        setAuthModalState((prev) => ({ ...prev, isOpen: true, mode: "login" }));
+    }
 
     return (
         <>
@@ -30,11 +37,13 @@ const Topbar: React.FC<Props> = () => {
                         >Premium</button>
                     </a>
                     {!user ?
-                        <Link href="/auth">
-                            <button
-                                className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-white text-sm font-medium hover:bg-white hover:text-brand-orange transition duration-300"
-                            >Sign In</button>
-                        </Link>
+                        (
+                            <Link href="/auth" onClick={handleClick}>
+                                <button
+                                    className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-white text-sm font-medium hover:bg-white hover:text-brand-orange transition duration-300"
+                                >Sign In</button>
+                            </Link>
+                        )
                         :
                         (
                             <div data-tooltip-id="my-tooltip"
@@ -47,7 +56,7 @@ const Topbar: React.FC<Props> = () => {
                                     alt="profile image"
                                     width={32}
                                     height={32}
-                                    className="cursor-pointer hover:opacity-80 transition duration-300"
+                                    className="hover:opacity-80 transition duration-300"
                                     onClick={() => setShowProfile(true)}
                                 />
                             </div>
