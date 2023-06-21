@@ -13,11 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="description" content="EliteCode" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Toaster
-        toastOptions={{
-          duration: 3000,
-        }}
-      /> */}
       <Toaster toastOptions={{
         duration: 3000,
       }}>
