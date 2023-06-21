@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import { MockProblems } from "@/MockProblems";
 import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
@@ -37,7 +38,11 @@ const Table: React.FC<Props> = () => {
                     {MockProblems.map((problem, index) => (
                         <tr key={problem.id} className='border-b'>
                             <td className="px-4 py-4 pl-7 text-green-700"><BsCheckCircle size={20} /></td>
-                            <td className="px-4 py-4 hover:text-sky-500"><a href={`https://leetcode.com/problems/${problem.id}`} target="_blank" rel="noopener noreferrer">{problem.title}</a></td>
+                            <td className="px-4 py-4 hover:text-sky-500">
+                                <Link href={`/problems/${problem.id}`} prefetch={false}>
+                                    {problem.title}
+                                </Link>
+                            </td>
                             <td className={`px-4 py-4 ${problem.difficulty === "Easy" ? "text-green-600" : problem.difficulty === "Medium" ? "text-orange-500" : "text-red-500"}`}>{problem.difficulty}</td>
                             <td className="px-4 py-4">{problem.category}</td>
                             <td className="px-4 py-4">{!problem.videoId ? 'Coming Soon' :

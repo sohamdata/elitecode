@@ -8,9 +8,11 @@ import UserProfile from "../Modals/UserProfile";
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 
-type Props = {};
+type Props = {
+    problemPage?: boolean;
+};
 
-const Topbar: React.FC<Props> = () => {
+const Topbar: React.FC<Props> = ({ problemPage }) => {
     const [user] = useAuthState(auth);
     const [showProfile, setShowProfile] = useState(false);
     const setAuthModalState = useSetRecoilState(authModalState);
@@ -29,7 +31,7 @@ const Topbar: React.FC<Props> = () => {
                 <Link href="/" className="flex items-center justify-center h-20">
                     <Image src="/logo.png" alt="EliteCode" width={32} height={32} />
                 </Link>
-
+                {problemPage && <div className="text-white">problem</div>}
                 <div className="flex items-center justify-center gap-4 sm:gap-8">
                     <a href="https://github.com/sohamdata/elitecode/" target="_blank" rel="noopener noreferrer">
                         <button
