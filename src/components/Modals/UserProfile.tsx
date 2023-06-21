@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { auth } from '@/firebase/firebase';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
 
 interface Props {
     onClose: () => void;
@@ -16,17 +17,17 @@ const UserProfile: React.FC<Props> = ({ onClose }) => {
         try {
             const success = await signOut();
             if (success) {
-                alert('You have signed out');
+                toast.success('You have signed out');
                 onClose();
             }
         } catch (error: any) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }
 
     useEffect(() => {
         if (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }, [error]);
 

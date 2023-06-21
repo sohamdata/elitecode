@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 interface Props { };
 
@@ -39,20 +40,20 @@ const Signup: React.FC<Props> = () => {
 
     const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!username || !password || !email) return alert("we need all fields to send you spam mails.");
+        if (!username || !password || !email) return toast.error("we need all fields to send you spam mails.");
         try {
             const newUser = await createUserWithEmailAndPassword(email, password);
             if (!newUser) return;
             router.push("/");
         } catch (error: any) {
-            alert(error.message);
+            toast.error(error.message);
             setEmail("");
         }
     }
 
     useEffect(() => {
         if (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }, [error]);
 

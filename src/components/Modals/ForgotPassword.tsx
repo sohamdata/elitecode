@@ -1,6 +1,7 @@
 import { auth } from '@/firebase/firebase';
 import { useEffect, useState } from 'react'
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
 
 interface props { };
 
@@ -10,20 +11,20 @@ const ForgotPassword: React.FC<props> = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!email) return alert("not funny.");
+        if (!email) return toast.error("not funny, provide your email.");
         try {
             const success = await sendPasswordResetEmail(email);
             if (success) {
-                alert("check your email.");
+                toast.success("check your email.");
             }
         } catch (error: any) {
-            alert(error.message);
+            toast.error(error.message);
         }
     };
 
     useEffect(() => {
         if (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }, [error]);
 

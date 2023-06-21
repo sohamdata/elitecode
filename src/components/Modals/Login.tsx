@@ -4,7 +4,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 interface Props { };
 
@@ -49,14 +49,13 @@ const Login: React.FC<Props> = () => {
             if (!newUser) return;
             router.push("/");
         } catch (error: any) {
-            // alert(error.message);
             toast.error(error.message);
         }
     }
 
     useEffect(() => {
         if (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
     }, [error]);
 
