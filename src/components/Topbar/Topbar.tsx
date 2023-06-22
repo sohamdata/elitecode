@@ -7,6 +7,8 @@ import { Tooltip } from 'react-tooltip';
 import UserProfile from "../Modals/UserProfile";
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { BsList } from "react-icons/bs";
 
 type Props = {
     problemPage?: boolean;
@@ -27,11 +29,24 @@ const Topbar: React.FC<Props> = ({ problemPage }) => {
 
     return (
         <>
-            <div className="flex items-center justify-between sm:px-12 px-2 md:px-24 bg-dark-layer-1">
-                <Link href="/" className="flex items-center justify-center h-20">
+            <div className="flex items-center justify-between w-full px-7 bg-dark-layer-1">
+                <Link href="/" className="flex items-center h-20">
                     <Image src="/logo.png" alt="EliteCode" width={32} height={32} />
                 </Link>
-                {problemPage && <div className="text-white">problem</div>}
+                {problemPage && (
+                    <div className="flex items-center justify-center gap-2 sm:gap-8">
+                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
+                            <FaChevronLeft />
+                        </div>
+                        <Link href="/" className="p-2 flex items-center whitespace-nowrap rounded font-medium max-w-[170px] text-amber-500 hover:text-sky-600 cursor-pointer">
+                            <BsList />
+                            <p className="ml-2">All Problems</p>
+                        </Link>
+                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
+                            <FaChevronRight />
+                        </div>
+                    </div>
+                )}
                 <div className="flex items-center justify-center gap-4 sm:gap-8">
                     <a href="https://github.com/sohamdata/elitecode/" target="_blank" rel="noopener noreferrer">
                         <button
