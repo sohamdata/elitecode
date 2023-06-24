@@ -5,7 +5,7 @@ type WorkspaceProps = {};
 
 const Workspace = (props: WorkspaceProps) => {
     return (
-        <Split className="split">
+        <Split className="split" minSize={0}>
             <Description />
             <div>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa</div>
         </Split>
