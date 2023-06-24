@@ -9,7 +9,7 @@ type YTProps = {
 const YoutubeVideo = ({ videoId, onClose }: YTProps) => {
     return (
         <>
-            <div className='fixed inset-0 flex items-center justify-center bg-black opacity-10 z-10' onClick={onClose} ></div>
+            <div className='fixed inset-0 flex items-center justify-center bg-black opacity-10'></div>
             <div className='fixed inset-0 flex items-center justify-center'>
                 <div className='w-full sm:w-[800px]'>
                     <div className='flex justify-end p-2'>
