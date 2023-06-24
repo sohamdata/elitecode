@@ -5,9 +5,9 @@ import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import YoutubeVideo from "../Modals/YoutubeVideo";
 
-type Props = {};
+type TableProps = {};
 
-const Table: React.FC<Props> = () => {
+const Table = (props: TableProps) => {
     const [ytmodal, setYtmodal] = useState(false);
     const [videoId, setVideoId] = useState("");
 

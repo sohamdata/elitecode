@@ -1,6 +1,6 @@
-type Props = {};
+interface DescriptionProps { };
 
-const Description: React.FC<Props> = () => {
+const Description = (props: DescriptionProps) => {
     return (
         <div className="h-screen">GET GET GET</div>
     )

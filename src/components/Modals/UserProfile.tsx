@@ -4,11 +4,11 @@ import { auth } from '@/firebase/firebase';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 
-interface Props {
+interface UserProfileProps {
     onClose: () => void;
 };
 
-const UserProfile: React.FC<Props> = ({ onClose }) => {
+const UserProfile = ({ onClose }: UserProfileProps) => {
     const [user] = useAuthState(auth);
     const [signOut, loading, error] = useSignOut(auth);
 

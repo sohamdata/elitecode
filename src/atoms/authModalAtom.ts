@@ -13,7 +13,6 @@ const initialState: AuthModalState = {
 };
 
 export const authModalState = atom<AuthModalState>({
-    // <AuthModalState>: generic type
     key: "authModalState",
     default: initialState,
 });

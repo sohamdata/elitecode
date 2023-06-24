@@ -10,7 +10,7 @@ import Image from 'next/image'
 
 interface AuthPageProps { };
 
-const AuthPage: React.FC<AuthPageProps> = () => {
+const AuthPage = (props: AuthPageProps) => {
     const router = useRouter();
     const authModal = useRecoilValue(authModalState);
     const [user, loading, error] = useAuthState(auth);

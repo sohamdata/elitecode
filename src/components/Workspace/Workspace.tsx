@@ -1,9 +1,9 @@
 import Split from 'react-split';
 import Description from './Description/Description';
 
-type Props = {};
+type WorkspaceProps = {};
 
-const Workspace: React.FC<Props> = () => {
+const Workspace = (props: WorkspaceProps) => {
     return (
         <Split className="split">
             <Description />

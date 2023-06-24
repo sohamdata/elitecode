@@ -3,7 +3,7 @@ import Workspace from "@/components/Workspace/Workspace";
 
 interface ProblemPageProps { };
 
-const ProblemPage: React.FC<ProblemPageProps> = () => {
+const ProblemPage = (props: ProblemPageProps) => {
     return (
         <>
             <Topbar problemPage />

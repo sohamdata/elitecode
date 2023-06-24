@@ -6,7 +6,7 @@ import { useSetRecoilState } from 'recoil';
 
 interface NavbarProps { };
 
-const Navbar: React.FC<NavbarProps> = () => {
+const Navbar = (props: NavbarProps) => {
     const setAuthModalState = useSetRecoilState(authModalState);
 
     const handleClick = () => {

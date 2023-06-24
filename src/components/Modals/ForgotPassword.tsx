@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 
-interface props { };
+interface ForgotPasswordProps { };
 
-const ForgotPassword: React.FC<props> = () => {
+const ForgotPassword = (props: ForgotPasswordProps) => {
     const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
     const [email, setEmail] = useState("");
 

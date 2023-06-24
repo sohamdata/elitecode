@@ -6,9 +6,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-interface Props { };
+interface LoginProps { };
 
-const Login: React.FC<Props> = () => {
+const Login = (props: LoginProps) => {
     const router = useRouter();
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");

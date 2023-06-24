@@ -6,9 +6,9 @@ import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
-interface Props { };
+interface SignupProps { };
 
-const Signup: React.FC<Props> = () => {
+const Signup = (props: SignupProps) => {
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

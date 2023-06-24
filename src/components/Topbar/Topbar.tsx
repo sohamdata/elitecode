@@ -10,11 +10,11 @@ import { useSetRecoilState } from 'recoil';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from "react-icons/bs";
 
-type Props = {
+type TopbarProps = {
     problemPage?: boolean;
 };
 
-const Topbar: React.FC<Props> = ({ problemPage }) => {
+const Topbar = ({ problemPage }: TopbarProps) => {
     const [user] = useAuthState(auth);
     const [showProfile, setShowProfile] = useState(false);
     const setAuthModalState = useSetRecoilState(authModalState);

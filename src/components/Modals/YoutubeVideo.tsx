@@ -1,12 +1,12 @@
 import { IoClose } from "react-icons/io5";
 import Youtube from "react-youtube";
 
-type Props = {
+type YTProps = {
     videoId: string;
     onClose: () => void;
 };
 
-const YoutubeVideo: React.FC<Props> = ({ videoId, onClose }) => {
+const YoutubeVideo = ({ videoId, onClose }: YTProps) => {
     return (
         <>
             <div className='fixed inset-0 flex items-center justify-center bg-black opacity-10 z-10' onClick={onClose} ></div>

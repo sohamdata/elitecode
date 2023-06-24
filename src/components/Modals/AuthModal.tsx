@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface AuthModalProps { };
 
-const AuthModal: React.FC<AuthModalProps> = () => {
+const AuthModal = (props: AuthModalProps) => {
     const authModalCurr = useRecoilValue(authModalState);
     const setAuthModalState = useSetRecoilState(authModalState);
 
