@@ -21,7 +21,7 @@ const Description = (props: DescriptionProps) => {
                         </div>
                         <div className='flex items-center mt-2'>
                             <div
-                                className="px-3 py-1 text-white bg-green-500 rounded-3xl bg-opacity-70 text-xs"
+                                className="px-3 py-1 text-green-500 bg-green-700 rounded-3xl bg-opacity-50 text-xs"
                             >
                                 Easy
                             </div>
@@ -55,8 +55,8 @@ const Description = (props: DescriptionProps) => {
 
                         <div className='mt-4 text-gray-300'>
                             <div>
-                                <p className='font-bold text-white '>Example 1: </p>
-                                <div>
+                                <p className='font-bold text-white'>Example 1: </p>
+                                <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                     <pre>
                                         <text className="font-medium text-white">Input:</text> nums = [2,7,11,15], target = 9
                                         <br />
@@ -68,7 +68,7 @@ const Description = (props: DescriptionProps) => {
 
                             <div>
                                 <p className='font-bold text-white '>Example 2: </p>
-                                <div>
+                                <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                     <pre>
                                         <text className="font-medium text-white">Input:</text> nums = [3,2,4], target = 6{" "}
                                         <br />
@@ -79,7 +79,7 @@ const Description = (props: DescriptionProps) => {
                             </div>
                             <div>
                                 <p className='font-bold text-white '>Example 3: </p>
-                                <div>
+                                <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                     <pre>
                                         <text className="font-medium text-white">Input:</text> nums = [3,3], target = 6
                                         <br />

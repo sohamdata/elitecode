@@ -54,3 +54,13 @@ body {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
     cursor: row-resize;
 }
+
+code {
+    border-radius: 5px;
+    border-width: 1px;
+    font-size: 0.75rem;
+    padding: 0.125rem;
+    background-color: hsla(0, 0%, 100%, 0.07);
+    border-color: rgba(247, 250, 255, 0.12);
+    color: rgba(239, 241, 246, 0.75);
+}
