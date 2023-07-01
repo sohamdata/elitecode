@@ -70,7 +70,7 @@ const Description = (props: DescriptionProps) => {
                                 <p className='font-bold text-white '>Example 2: </p>
                                 <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                     <pre>
-                                        <text className="font-medium text-white">Input:</text> nums = [3,2,4], target = 6{" "}
+                                        <text className="font-medium text-white">Input:</text> nums = [3,2,4], target = 6
                                         <br />
                                         <text className="font-medium text-white">Output:</text> [1,2] <br />
                                         <text className="font-medium text-white">Explanation: </text>Because nums[1] + nums[2] == 6, we return [1, 2].
