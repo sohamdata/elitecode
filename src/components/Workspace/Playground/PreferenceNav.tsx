@@ -1,0 +1,32 @@
+import { AiOutlineExpandAlt, AiOutlineSetting } from "react-icons/ai";
+import CustomTooltip from "@/components/CustomToolTip/CustomToolTip";
+
+interface PreferenceNavProps { };
+
+const PreferenceNav = (props: PreferenceNavProps) => {
+    return (
+        <div className='h-11 w-full flex items-center justify-between pt-2 bg-dark-layer-2  overflow-x-hidden'>
+            <div className="px-3 py-1.5 bg-dark-layer-1 rounded-lg text-xs text-white font-medium hover:bg-neutral-700 cursor-pointer">
+                Python3
+            </div>
+            <div className="mx-3 flex items-center space-x-2">
+                <div className="p-1 rounded-md text-slate-400 hover:bg-neutral-700 cursor-pointer">
+                    <CustomTooltip
+                        id="tooltip-settings"
+                        content="Settings"
+                        child={<AiOutlineSetting />}
+                    />
+                </div>
+                <div className="p-1 rounded-md text-slate-400 hover:bg-neutral-700 cursor-pointer">
+                    <CustomTooltip
+                        id="tooltip-fs"
+                        content="FullScreen"
+                        child={<AiOutlineExpandAlt />}
+                    />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default PreferenceNav;

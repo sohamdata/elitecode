@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Tooltip } from 'react-tooltip';
+import CustomTooltip from "@/components/CustomToolTip/CustomToolTip";
 import UserProfile from "../Modals/UserProfile";
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
@@ -63,20 +63,20 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                         )
                         :
                         (
-                            <div data-tooltip-id="my-tooltip"
-                                data-tooltip-content={user.email ?? ""}
-                                data-tooltip-place="top"
-                            >
-                                <Tooltip id="my-tooltip" />
-                                <Image
-                                    src="/pfp.png"
-                                    alt="profile image"
-                                    width={32}
-                                    height={32}
-                                    className="hover:opacity-80 transition duration-300"
-                                    onClick={() => setShowProfile(true)}
-                                />
-                            </div>
+                            <CustomTooltip
+                                id="tooltip-profile"
+                                content="Profile"
+                                child={
+                                    <Image
+                                        src="/pfp.png"
+                                        alt="profile image"
+                                        width={32}
+                                        height={32}
+                                        className="hover:opacity-80 transition duration-300"
+                                        onClick={() => setShowProfile(true)}
+                                    />
+                                }
+                            />
                         )
                     }
                 </div>

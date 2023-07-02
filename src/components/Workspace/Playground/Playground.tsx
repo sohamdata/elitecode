@@ -1,9 +1,11 @@
+import PreferenceNav from "./PreferenceNav";
+
 interface PlaygroundProps { };
 
 const Playground = (props: PlaygroundProps) => {
     return (
         <>
-            I play here
+            <PreferenceNav />
         </>
     )
 }

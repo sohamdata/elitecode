@@ -25,7 +25,7 @@ const Description = (props: DescriptionProps) => {
                             >
                                 Easy
                             </div>
-                            <div className='p-1 ml-4 text-lg cursor-pointer'>
+                            <div className='p-1 ml-4 text-lg cursor-pointer text-orange-500'>
                                 <BsCheck2Circle />
                             </div>
                             <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer'>
