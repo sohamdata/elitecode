@@ -19,7 +19,47 @@ const Playground = (props: PlaygroundProps) => {
                         style={{ fontSize: 14 }}
                     />
                 </div>
-                <div className='text-white'>real industry level programming here</div>
+
+                <div className="w-full px-5">
+                    <div className='relative'>
+                        <div className="h-10 relative flex items-center text-white text-sm font-bold">Testcase</div>
+                        <hr className="absolute bottom-0 h-0.5 border-none w-16 bg-white" />
+                    </div>
+
+                    <div className='flex mt-2 space-x-4'>
+                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
+                            Case 1
+                        </div>
+                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
+                            Case 2
+                        </div>
+                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
+                            Case 3
+                        </div>
+                        <div className="px-3 py-1.5 rounded-lg text-white font-medium transition-all hover:bg-neutral-700 cursor-pointer">
+                            &#43;
+                        </div>
+                    </div>
+
+                    <div className='mt-4 text-gray-300 text-sm'>
+                        <div>
+                            <p className='font-bold text-white'>Input: </p>
+                            <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
+                                <pre>
+                                    nums = [2,7,11,15], target = 9
+                                </pre>
+                            </div>
+                        </div>
+                        <div>
+                            <p className='font-bold text-white'>Output: </p>
+                            <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
+                                <pre>
+                                    [0,1]
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </Split>
         </div >
     )
