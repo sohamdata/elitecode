@@ -30,15 +30,15 @@ const Topbar = ({ problemPage }: TopbarProps) => {
     return (
         <>
             <div className="flex items-center justify-between w-full px-7 bg-dark-layer-1">
-                <Link href="/" className="flex items-center h-20">
+                <Link href="/" className="flex items-center h-[3.1rem]">
                     <Image src="/logo.png" alt="EliteCode" width={32} height={32} />
                 </Link>
                 {problemPage && (
-                    <div className="flex items-center justify-center gap-2 sm:gap-8">
+                    <div className="ml-28 flex items-center justify-center gap-2">
                         <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
                             <FaChevronLeft />
                         </div>
-                        <Link href="/" className="p-2 flex items-center whitespace-nowrap rounded font-medium max-w-[170px] text-amber-500 hover:text-sky-600 cursor-pointer">
+                        <Link href="/" className="flex items-center whitespace-nowrap rounded font-medium max-w-[170px] text-amber-500 hover:text-sky-600 cursor-pointer">
                             <BsList />
                             <p className="ml-2">All Problems</p>
                         </Link>
@@ -47,7 +47,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                         </div>
                     </div>
                 )}
-                <div className="flex items-center justify-center gap-4 sm:gap-8">
+                <div className="flex items-center justify-end space-x-4">
                     <a href="https://github.com/sohamdata/elitecode/" target="_blank" rel="noopener noreferrer">
                         <button
                             className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-brand-orange text-sm font-medium hover:bg-brand-orange hover:text-white transition duration-300"
@@ -57,7 +57,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                         (
                             <Link href="/auth" onClick={handleClick}>
                                 <button
-                                    className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-white text-sm font-medium hover:bg-white hover:text-brand-orange transition duration-300"
+                                    className="bg-gray-700 px-4 py-1 rounded-lg text-white text-sm font-medium hover:bg-white hover:text-brand-orange transition duration-300"
                                 >Sign In</button>
                             </Link>
                         )
