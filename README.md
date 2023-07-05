@@ -7,3 +7,4 @@
 - TailwindCSS
 - Firebase
 - react-firebase-hooks
+- CodeMirror 6 (for code editor)
