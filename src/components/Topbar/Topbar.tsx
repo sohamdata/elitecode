@@ -1,14 +1,15 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import CustomTooltip from "@/components/CustomToolTip/CustomToolTip";
 import UserProfile from "../Modals/UserProfile";
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from "react-icons/bs";
+const CustomTooltip = dynamic(() => import('../CustomToolTip/CustomToolTip'), { ssr: false });
 
 type TopbarProps = {
     problemPage?: boolean;

@@ -1,5 +1,6 @@
+import dynamic from "next/dynamic";
 import { AiOutlineExpandAlt, AiOutlineSetting } from "react-icons/ai";
-import CustomTooltip from "@/components/CustomToolTip/CustomToolTip";
+const CustomTooltip = dynamic(() => import('../../CustomToolTip/CustomToolTip'), { ssr: false });
 
 interface PreferenceNavProps { };
 
