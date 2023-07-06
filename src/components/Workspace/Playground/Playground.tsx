@@ -3,24 +3,28 @@ import PreferenceNav from "./PreferenceNav";
 import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { python } from '@codemirror/lang-python';
+import PlaygroundFooter from './PlaygroundFooter';
 
 interface PlaygroundProps { };
 
 const Playground = (props: PlaygroundProps) => {
+    const code = `def twoSum(nums, target):
+  # write your code here
+    `;
     return (
-        <div className="flex flex-col bg-dark-layer-1 relative">
+        <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
             <Split className="h-[calc(100vh-94px)]" direction="vertical" sizes={[60, 40]} minSize={60}>
                 <div className="w-full overflow-auto">
                     <CodeMirror
-                        value="a = 1"
+                        value={code}
                         theme={vscodeDark}
                         extensions={[python()]}
                         style={{ fontSize: 14 }}
                     />
                 </div>
 
-                <div className="w-full px-5">
+                <div className="px-5 w-full overflow-auto">
                     <div className='relative'>
                         <div className="h-10 relative flex items-center text-white text-sm font-bold">Testcase</div>
                         <hr className="absolute bottom-0 h-0.5 border-none w-16 bg-white" />
@@ -61,6 +65,7 @@ const Playground = (props: PlaygroundProps) => {
                     </div>
                 </div>
             </Split>
+            <PlaygroundFooter />
         </div >
     )
 }
