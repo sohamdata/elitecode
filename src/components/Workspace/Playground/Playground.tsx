@@ -2,15 +2,16 @@ import Split from 'react-split';
 import PreferenceNav from "./PreferenceNav";
 import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
-import { python } from '@codemirror/lang-python';
+import { javascript } from '@codemirror/lang-javascript';
 import PlaygroundFooter from './PlaygroundFooter';
 
 interface PlaygroundProps { };
 
 const Playground = (props: PlaygroundProps) => {
-    const code = `def twoSum(nums, target):
+    const code = `function twoSum(nums, target){
   # write your code here
-    `;
+};
+`;
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
@@ -19,7 +20,7 @@ const Playground = (props: PlaygroundProps) => {
                     <CodeMirror
                         value={code}
                         theme={vscodeDark}
-                        extensions={[python()]}
+                        extensions={[javascript()]}
                         style={{ fontSize: 14 }}
                     />
                 </div>
