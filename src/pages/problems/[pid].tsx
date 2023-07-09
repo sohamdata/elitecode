@@ -11,7 +11,7 @@ const ProblemPage = ({ problem }: ProblemPageProps) => {
     return (
         <>
             <Topbar problemPage />
-            <Workspace />
+            <Workspace problem={problem} />
         </>
     )
 }
