@@ -53,6 +53,9 @@ const Description = ({ problem }: DescriptionProps) => {
                                 {problem.examples.map((example, index) => (
                                     <div key={index}>
                                         <p className='font-bold text-white'> Example {example.id}: </p>
+                                        {example.img && (
+                                            <img src={example.img} alt="example" className="mt-3" />
+                                        )}
                                         <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                             <pre>
                                                 <text className="font-medium text-white">Input:</text> {example.inputText}
