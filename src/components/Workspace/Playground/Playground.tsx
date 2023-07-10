@@ -12,7 +12,7 @@ interface PlaygroundProps {
 };
 
 const Playground = ({ problem }: PlaygroundProps) => {
-    const [currCase, setcurrCase] = useState(1);
+    const [currCase, setcurrCase] = useState(0);
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
@@ -36,8 +36,8 @@ const Playground = ({ problem }: PlaygroundProps) => {
                     <div className='flex mt-2 space-x-4'>
                         {problem.examples.map((testcase, index) => (
                             <div key={index} className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer"
-                                onClick={() => setcurrCase(testcase.id)}>
-                                Case {testcase.id}
+                                onClick={() => setcurrCase(index)}>
+                                Case {index + 1}
                             </div>
                         ))
                         }
@@ -51,7 +51,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                             <p className='font-bold text-white'>Input: </p>
                             <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                 <pre>
-                                    {problem.examples[currCase - 1].inputText}
+                                    {problem.examples[currCase].inputText}
                                 </pre>
                             </div>
                         </div>
@@ -59,7 +59,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                             <p className='font-bold text-white'>Output: </p>
                             <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                 <pre>
-                                    {problem.examples[currCase - 1].outputText}
+                                    {problem.examples[currCase].outputText}
                                 </pre>
                             </div>
                         </div>

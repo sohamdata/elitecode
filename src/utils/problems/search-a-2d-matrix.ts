@@ -49,7 +49,7 @@ export const search2DMatrix: Problem = {
   `,
     examples: [
         {
-            id: 1,
+            id: 0,
             inputText: `matrix = [
   [1,3,5,7],
   [10,11,16,20],
@@ -59,7 +59,7 @@ export const search2DMatrix: Problem = {
             img: example1.src,
         },
         {
-            id: 2,
+            id: 1,
             inputText: `matrix = [
   [1,3,5,7],
   [10,11,16,20],
@@ -69,7 +69,7 @@ export const search2DMatrix: Problem = {
             img: example2.src,
         },
         {
-            id: 3,
+            id: 2,
             inputText: `matrix = [[1]], target = 1`,
             outputText: `true`,
         },

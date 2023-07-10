@@ -28,22 +28,22 @@ export const validParentheses: Problem = {
 	</ul>`,
     examples: [
         {
-            id: 1,
+            id: 0,
             inputText: 's = "()"',
             outputText: "true",
         },
         {
-            id: 2,
+            id: 1,
             inputText: 's = "()[]{}"',
             outputText: "true",
         },
         {
-            id: 3,
+            id: 2,
             inputText: 's = "(]"',
             outputText: "false",
         },
         {
-            id: 4,
+            id: 3,
             inputText: 's = "([)]"',
             outputText: "false",
         },
