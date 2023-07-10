@@ -35,7 +35,9 @@ const Playground = ({ problem }: PlaygroundProps) => {
 
                     <div className='flex mt-2 space-x-4'>
                         {problem.examples.map((testcase, index) => (
-                            <div key={index} className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer"
+                            <div key={index} className={`px-3 py-1.5 
+                                ${currCase === index && 'bg-neutral-600'}
+                            rounded-lg text-white font-medium transition-all hover:bg-neutral-700 cursor-pointer`}
                                 onClick={() => setcurrCase(index)}>
                                 Case {index + 1}
                             </div>
