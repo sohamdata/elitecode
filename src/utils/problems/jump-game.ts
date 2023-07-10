@@ -39,13 +39,13 @@ export const jumpGame: Problem = {
 
     examples: [
         {
-            id: 0,
+            id: 1,
             inputText: `nums = [2,3,1,1,4]`,
             outputText: `true`,
             explanation: "Jump 1 step from index 0 to 1, then 3 steps to the last index.",
         },
         {
-            id: 1,
+            id: 2,
             inputText: `nums = [3,2,1,0,4]`,
             outputText: `false`,
             explanation:

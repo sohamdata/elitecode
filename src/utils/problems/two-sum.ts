@@ -2,8 +2,8 @@ import assert from "assert";
 import { Problem } from "../types/problem";
 
 const startCodeTwoSum = `function twoSum(nums, target) {
-    // Your code here
-}`;
+  // Your code here
+};`;
 
 const handlerTwoSum = (fun: any) => {
     try {
@@ -57,7 +57,7 @@ export const twoSum: Problem = {
         },
         {
             id: 3,
-            inputText: " nums = [3,3], target = 6",
+            inputText: "nums = [3,3], target = 6",
             outputText: "[0,1]",
         },
     ],

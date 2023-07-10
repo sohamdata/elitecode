@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Split from 'react-split';
 import PreferenceNav from "./PreferenceNav";
 import CodeMirror from '@uiw/react-codemirror';
@@ -11,6 +12,8 @@ interface PlaygroundProps {
 };
 
 const Playground = ({ problem }: PlaygroundProps) => {
+    const [currCase, setcurrCase] = useState(1);
+
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
@@ -31,15 +34,13 @@ const Playground = ({ problem }: PlaygroundProps) => {
                     </div>
 
                     <div className='flex mt-2 space-x-4'>
-                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
-                            Case 1
-                        </div>
-                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
-                            Case 2
-                        </div>
-                        <div className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
-                            Case 3
-                        </div>
+                        {problem.examples.map((testcase, index) => (
+                            <div key={index} className="px-3 py-1.5 bg-neutral-700 rounded-lg text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer"
+                                onClick={() => setcurrCase(testcase.id)}>
+                                Case {testcase.id}
+                            </div>
+                        ))
+                        }
                         <div className="px-3 py-1.5 rounded-lg text-white font-medium transition-all hover:bg-neutral-700 cursor-pointer">
                             &#43;
                         </div>
@@ -50,7 +51,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                             <p className='font-bold text-white'>Input: </p>
                             <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                 <pre>
-                                    nums = [2,7,11,15], target = 9
+                                    {problem.examples[currCase - 1].inputText}
                                 </pre>
                             </div>
                         </div>
@@ -58,7 +59,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                             <p className='font-bold text-white'>Output: </p>
                             <div className="m-2 p-2 rounded-md bg-slate-200 bg-opacity-10">
                                 <pre>
-                                    [0,1]
+                                    {problem.examples[currCase - 1].outputText}
                                 </pre>
                             </div>
                         </div>
