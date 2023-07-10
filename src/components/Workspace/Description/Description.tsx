@@ -73,7 +73,7 @@ const Description = ({ problem }: DescriptionProps) => {
                             </div>
                         </div>
 
-                        <div className='my-5 text-white font-medium'>
+                        <div className='my-5 pb-5 text-white font-medium'>
                             <div className='text-md'>Constraints:</div>
                             <ul className='ml-5 list-disc'>
                                 <div dangerouslySetInnerHTML={{ __html: problem.constraints }} />
