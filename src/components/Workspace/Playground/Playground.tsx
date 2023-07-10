@@ -17,7 +17,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden">
             <PreferenceNav />
-            <Split className="h-[calc(100vh-94px)]" direction="vertical" sizes={[60, 40]} minSize={60}>
+            <Split className="h-[calc(100vh-94px)]" direction="vertical" sizes={[55, 45]} minSize={60}>
                 <div className="w-full overflow-auto">
                     <CodeMirror
                         value={problem.starterCode}
@@ -27,7 +27,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                     />
                 </div>
 
-                <div className="px-5 w-full overflow-auto">
+                <div className="px-5 w-full overflow-auto pb-12">
                     <div className='relative'>
                         <div className="h-10 relative flex items-center text-white text-sm font-bold">Testcase</div>
                         <hr className="absolute bottom-0 h-0.5 border-none w-16 bg-white" />
