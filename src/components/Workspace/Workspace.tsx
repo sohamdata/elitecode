@@ -11,7 +11,7 @@ const Workspace = ({ problem }: WorkspaceProps) => {
     return (
         <Split className="split" minSize={0}>
             <Description problem={problem} />
-            <Playground />
+            <Playground problem={problem} />
         </Split>
     );
 }
