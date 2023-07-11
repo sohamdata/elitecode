@@ -1,4 +1,5 @@
 import Table from "@/components/Table/Table";
+import AddProblem from "@/components/TempAddProblem/AddProblem";
 import Topbar from "@/components/Topbar/Topbar";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <div className='mt-6 mx-5 px-4 sm:px-[10vw]'>
         <Table />
       </div>
+      <AddProblem />
     </main>
   )
 }
