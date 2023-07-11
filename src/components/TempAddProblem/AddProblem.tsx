@@ -28,9 +28,12 @@ const AddProblem = (props: Temp) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        const data_ = {
+            ...data,
+            order: Number(data.order),
+        }
         const docRef = doc(firestore, "problems", data.id);
-        await setDoc(docRef, data);
+        await setDoc(docRef, data_);
         toast.success("saved to db");
     };
 
@@ -40,11 +43,7 @@ const AddProblem = (props: Temp) => {
             <input type="text" placeholder="title" name="title" onChange={handleChange} />
             <input type="text" placeholder="difficulty" name="difficulty" onChange={handleChange} />
             <input type="text" placeholder="category" name="category" onChange={handleChange} />
-            <input type="number" placeholder="order" name="order" onChange={handleChange} />
-            <div className="flex justify-between">
-                <input type="number" placeholder="likes" name="likes" onChange={handleChange} />
-                <input type="number" placeholder="dislikes" name="dislikes" onChange={handleChange} />
-            </div>
+            <input type="text" placeholder="order" name="order" onChange={handleChange} />
             <input type="text" placeholder="videoId?" name="videoId" onChange={handleChange} />
             <input type="text" placeholder="link?" name="link" onChange={handleChange} />
             <button className="bg-slate-500 text-green-300" type="submit">submit</button>

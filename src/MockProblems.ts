@@ -14,7 +14,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Easy",
         category: "Array",
         order: 1,
-        videoId: "",
+        videoId: "KLlXCFG5TnA",
     },
     {
         id: "reverse-linked-list",
@@ -22,7 +22,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Hard",
         category: "Linked List",
         order: 2,
-        videoId: "",
+        videoId: "G0_I-ZF0S38",
     },
     {
         id: "jump-game",
@@ -30,7 +30,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Medium",
         category: "Dynamic Programming",
         order: 3,
-        videoId: "q5ANAl8Z458",
+        videoId: "Yan0cv2cLy8",
     },
     {
         id: "valid-parentheses",
@@ -38,7 +38,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Easy",
         category: "Stack",
         order: 4,
-        videoId: "",
+        videoId: "WTzjTskDFMg",
     },
     {
         id: "search-a-2d-matrix",
@@ -46,7 +46,7 @@ export const MockProblems: Problem[] = [
         difficulty: "Medium",
         category: "Binary Search",
         order: 5,
-        videoId: "",
+        videoId: "Ber2pi2C0j0",
     },
     {
         id: "container-with-most-water",
