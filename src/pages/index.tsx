@@ -1,5 +1,4 @@
 import Table from "@/components/Table/Table";
-import AddProblem from "@/components/TempAddProblem/AddProblem";
 import Topbar from "@/components/Topbar/Topbar";
 
 export default function Home() {

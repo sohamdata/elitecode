@@ -16,7 +16,7 @@ type TopbarProps = {
 };
 
 const Topbar = ({ problemPage }: TopbarProps) => {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const [showProfile, setShowProfile] = useState(false);
     const setAuthModalState = useSetRecoilState(authModalState);
 
@@ -49,11 +49,11 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                     </div>
                 )}
                 <div className="flex items-center justify-end space-x-4">
-                    <a href="https://github.com/sohamdata/elitecode/" target="_blank" rel="noopener noreferrer">
+                    <Link href="https://github.com/sohamdata/elitecode/" target="_blank" rel="noopener noreferrer">
                         <button
                             className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-brand-orange text-sm font-medium hover:bg-brand-orange hover:text-white transition duration-300"
                         >Premium</button>
-                    </a>
+                    </Link>
                     {!user ?
                         (
                             <Link href="/auth" onClick={handleClick}>
@@ -82,7 +82,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                     }
                 </div>
             </div >
-            {showProfile && <UserProfile onClose={closeProfileModal} />}
+            {user && showProfile && <UserProfile onClose={closeProfileModal} />}
         </>
     )
 }
