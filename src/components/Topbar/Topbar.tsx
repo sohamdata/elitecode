@@ -20,10 +20,6 @@ const Topbar = ({ problemPage }: TopbarProps) => {
     const [showProfile, setShowProfile] = useState(false);
     const setAuthModalState = useSetRecoilState(authModalState);
 
-    const closeProfileModal = () => {
-        setShowProfile(false);
-    };
-
     const handleClick = () => {
         setAuthModalState((prev) => ({ ...prev, isOpen: true, mode: "login" }));
     }
@@ -54,7 +50,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                             className="bg-gray-700 px-2 py-1 sm:px-4 rounded-lg text-brand-orange text-sm font-medium hover:bg-brand-orange hover:text-white transition duration-300"
                         >Premium</button>
                     </Link>
-                    {!user ?
+                    {!loading && !user ?
                         (
                             <Link href="/auth" onClick={handleClick}>
                                 <button
@@ -73,7 +69,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                                         alt="profile image"
                                         width={32}
                                         height={32}
-                                        className="hover:opacity-80 transition duration-300"
+                                        className="hover:opacity-80 transition duration-300 cursor-pointer"
                                         onClick={() => setShowProfile(true)}
                                     />
                                 }
@@ -82,7 +78,7 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                     }
                 </div>
             </div >
-            {user && showProfile && <UserProfile onClose={closeProfileModal} />}
+            {user && showProfile && <UserProfile onClose={() => setShowProfile(false)} />}
         </>
     )
 }
