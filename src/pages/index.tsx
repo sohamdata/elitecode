@@ -9,7 +9,7 @@ export default function Home() {
       <div className='mt-6 mx-5 px-4 sm:px-[10vw]'>
         <Table />
       </div>
-      <AddProblem />
+      {/* <AddProblem /> */}
     </main>
   )
 }

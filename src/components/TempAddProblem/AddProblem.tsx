@@ -34,6 +34,12 @@ const AddProblem = (props: Temp) => {
         }
         const docRef = doc(firestore, "problems", data.id);
         await setDoc(docRef, data_);
+        for (let key in data_) {
+            setData({
+                ...data,
+                [key]: "",
+            })
+        }
         toast.success("saved to db");
     };
 
