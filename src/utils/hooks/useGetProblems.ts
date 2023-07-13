@@ -1,16 +1,30 @@
-// import { firestore } from "@/firebase/firebase";
-// import { collection, query, getDocs, orderBy } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { collection, query, orderBy } from 'firebase/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { firestore } from "@/firebase/firebase";
+import { ProblemDoc } from "../types/problem";
 
-// const useGetProblems = async () => {
-//     const q = query(collection(firestore, "problems"), orderBy("order", "asc"));
+const useGetProblems = () => {
+    const problemsCollectionRef = collection(firestore, 'problems');
+    const problemsQuery = query(problemsCollectionRef, orderBy('order', 'asc'));
+    const [value, loading, error] = useCollection(problemsQuery, {
+        snapshotListenOptions: { includeMetadataChanges: true },
+    });
 
-//     const querySnapshot = await getDocs(q);
-//     const probsArray: any[] = [];
-//     querySnapshot.forEach((doc) => {
-//         // console.log(doc.id, " => ", doc.data());
-//         probsArray.push({ id: doc.id, ...doc.data() });
-//     });
-//     return probsArray;
-// };
+    const [probsArray, setProbsArray] = useState<ProblemDoc[]>([]);
 
-// export default useGetProblems;
+    useEffect(() => {
+        if (value) {
+            const newArray: ProblemDoc[] = [];
+            value.forEach((doc) => {
+                newArray.push(doc.data() as ProblemDoc);
+            });
+            setProbsArray(newArray);
+            console.log(newArray);
+        }
+    }, [value]);
+
+    return { probsArray, loading, error };
+};
+
+export default useGetProblems;
