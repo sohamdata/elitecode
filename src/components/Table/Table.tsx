@@ -43,9 +43,15 @@ const Table = (props: TableProps) => {
                         <tr key={index} className='border-b'>
                             <td className="px-4 py-4 pl-7 text-green-700"><BsCheckCircle size={20} /></td>
                             <td className="px-4 py-4 hover:text-sky-500">
-                                <Link href={`/problems/${problem.id}`} prefetch={false}>
-                                    {problem.title}
-                                </Link>
+                                {problem.link ?
+                                    <Link href={problem.link} prefetch={false}>
+                                        {problem.title}
+                                    </Link>
+                                    :
+                                    <Link href={`/problems/${problem.id}`} prefetch={false}>
+                                        {problem.title}
+                                    </Link>
+                                }
                             </td>
                             <td className={`px-4 py-4 ${problem.difficulty === "Easy" ? "text-green-600" : problem.difficulty === "Medium" ? "text-orange-500" : "text-red-500"}`}>{problem.difficulty}</td>
                             <td className="px-4 py-4">{problem.category}</td>
