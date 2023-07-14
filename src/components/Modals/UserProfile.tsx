@@ -4,6 +4,7 @@ import { auth } from '@/firebase/firebase';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import Router from 'next/router';
 
 interface UserProfileProps {
     onClose: () => void;
@@ -24,6 +25,7 @@ const UserProfile = ({ onClose }: UserProfileProps) => {
             if (success) {
                 toast.success('You have signed out');
                 onClose();
+                Router.reload();
             }
         } catch (error: any) {
             toast.error(error.message);
@@ -60,7 +62,7 @@ const UserProfile = ({ onClose }: UserProfileProps) => {
                                 alt="profile image"
                                 width={100}
                                 height={100}
-                                className="hover:opacity-80 transition duration-300 cursor-pointer"
+                                className="hover:opacity-80 transition duration-300"
                             />
                             <p className="text-lg">
                                 <span className="font-semibold text-brand-orange-s">Email: </span>
