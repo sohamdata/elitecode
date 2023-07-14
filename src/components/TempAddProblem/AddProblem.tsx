@@ -19,7 +19,6 @@ const AddProblem = (props: Temp) => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.name, e.target.value);
         setData({
             ...data,
             [e.target.name]: e.target.value,

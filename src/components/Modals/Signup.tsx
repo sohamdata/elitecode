@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '@/firebase/firebase';
+import { auth, firestore } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { doc, setDoc } from "firebase/firestore";
 
 interface SignupProps { };
 
@@ -42,8 +43,25 @@ const Signup = (props: SignupProps) => {
         e.preventDefault();
         if (!username || !password || !email) return toast.error("we need all fields to send you spam mails.");
         try {
+            toast.loading("creating account...", { duration: 1000 });
             const newUser = await createUserWithEmailAndPassword(email, password);
             if (!newUser) return;
+
+            const userData = {
+                uid: newUser.user.uid,
+                email: newUser.user.email,
+                username: username,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                likedProblems: [],
+                disLikedProblems: [],
+                solvedProblems: [],
+                starredProblems: [],
+            };
+            const docRef = doc(firestore, "users", newUser.user.uid);
+            await setDoc(docRef, userData);
+
+            toast.success("account created!");
             router.push("/");
         } catch (error: any) {
             toast.error(error.message);

@@ -20,7 +20,6 @@ const useGetProblems = () => {
                 newArray.push(doc.data() as ProblemDoc);
             });
             setProbsArray(newArray);
-            console.log(newArray);
         }
     }, [value]);
 
