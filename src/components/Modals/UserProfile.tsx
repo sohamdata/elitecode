@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { auth } from '@/firebase/firebase';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 interface UserProfileProps {
     onClose: () => void;
@@ -11,9 +12,13 @@ interface UserProfileProps {
 const UserProfile = ({ onClose }: UserProfileProps) => {
     const [user] = useAuthState(auth);
     const [signOut, loading, error] = useSignOut(auth);
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const handleSignout: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
         e.preventDefault();
+        setShowConfirmation(true);
+    }
+    const handleConfirmSignout = async () => {
         try {
             const success = await signOut();
             if (success) {
@@ -23,7 +28,7 @@ const UserProfile = ({ onClose }: UserProfileProps) => {
         } catch (error: any) {
             toast.error(error.message);
         }
-    }
+    };
 
     useEffect(() => {
         if (error) {
@@ -50,17 +55,41 @@ const UserProfile = ({ onClose }: UserProfileProps) => {
                             </button>
                         </div>
                         <div className="flex flex-col items-center justify-center gap-4 p-4">
-                            <img src="/pfp.png" alt="profile image" className="rounded-full h-20 w-20" />
-                            <p className="text-lg text-brand-orange-s">
-                                <span className="font-semibold">Email: </span>
-                                {user?.email}
+                            <Image
+                                src="/pfp.png"
+                                alt="profile image"
+                                width={100}
+                                height={100}
+                                className="hover:opacity-80 transition duration-300 cursor-pointer"
+                            />
+                            <p className="text-lg">
+                                <span className="font-semibold text-brand-orange-s">Email: </span>
+                                <span className="text-white">{user?.email}</span>
                             </p>
-                            <button
-                                className="py-2 mt-2 w-1/2 rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300"
-                                onClick={handleSignout}
-                            >
-                                {loading ? "Loading..." : "Sign out"}
-                            </button>
+                            {showConfirmation ? (
+                                <>
+                                    <button
+                                        className="py-2 mt-2 w-1/2 rounded-md bg-red-500 font-medium text-white hover:bg-white hover:text-red-500 transition duration-300"
+                                        onClick={handleConfirmSignout}
+                                    >
+                                        Confirm Sign Out
+                                    </button>
+                                    <button
+                                        className="py-2 mt-2 w-1/2 rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300"
+                                        onClick={() => onClose()}
+                                    >
+                                        Cancel
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    className="py-2 mt-2 w-1/2 rounded-md bg-brand-orange font-medium text-white hover:bg-white hover:text-brand-orange transition duration-300"
+                                    onClick={handleSignout}
+                                >
+                                    {loading ? "Loading..." : "Sign out"}
+                                </button>
+                            )}
+
                         </div>
                     </div>
                 </div>
