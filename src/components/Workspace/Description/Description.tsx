@@ -12,6 +12,11 @@ interface DescriptionProps {
     problem: Problem,
 };
 
+interface handleClickProps {
+    onLike?: boolean,
+    onDislike?: boolean,
+};
+
 const Description = ({ problem }: DescriptionProps) => {
 
     const { currProblem, loading, error } = useGetProblemById(problem.id);
@@ -19,42 +24,113 @@ const Description = ({ problem }: DescriptionProps) => {
     // const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
     // console.log(data);
 
-    const handleLike = async () => {
+    const handleClick = async ({ onLike, onDislike }: handleClickProps) => {
         if (!user) {
-            toast.error('If you like this problem that much, you should login first');
+            onLike ?
+                toast.error('If you like that problem that much, you should login first') :
+                toast.error('If you hate that problem that much, you should login first');
             return;
         }
-        // firebase transactions
-        // not liked (and not dislied) -> like+1
-        if (!liked && !disliked) {
-            try {
-                await runTransaction(firestore, async (transaction) => {
-                    const sfDocRef = doc(firestore, "problems", currProblem!.id);
-                    const sfDoc = await transaction.get(sfDocRef);
-                    if (!sfDoc.exists()) {
-                        throw "Document does not exist!";
-                    }
-                    const newPopulation = sfDoc.data().likes + 1;
-                    transaction.update(sfDocRef, { likes: newPopulation });
-                });
-                // console.log("Transaction successfully committed!");
-                toast.success('Liked');
-            } catch (e) {
-                console.log("Transaction failed: ", e);
+        await runTransaction(firestore, async (transaction) => {
+            const problemDocRef = doc(firestore, "problems", problem.id);
+            const userDocRef = doc(firestore, "users", user.uid);
+            const problemDoc = await transaction.get(problemDocRef);
+            const userDoc = await transaction.get(userDocRef);
+
+            if (!problemDoc.exists() || !userDoc.exists()) {
+                throw "Document does not exist!";
             }
 
-            return;
-        }
-        // already liked -> like-1
-        if (liked) {
-            return;
-        }
-        // disliked -> like+1, dislike-1
-        if (disliked) {
-            return;
-        }
+            if (!liked && !disliked) {
+                if (onLike) {
+                    // just like -> like+1
+                    const newLikes = problemDoc.data().likes + 1;
+                    transaction.update(problemDocRef, { likes: newLikes });
+                    transaction.update(userDocRef, {
+                        likedProblems: [...userDoc.data().likedProblems, problem.id]
+                    });
+                    console.log('Liked');
+                    setData({ liked: true, disliked, starred, solved });
+                    return;
+                }
+                if (onDislike) {
+                    // just dislike -> dislike+1
+                    const newDislikes = problemDoc.data().dislikes + 1;
+                    transaction.update(problemDocRef, { dislikes: newDislikes });
+                    transaction.update(userDocRef, {
+                        dislikedProblems: [...userDoc.data().dislikedProblems, problem.id]
+                    });
+                    console.log('Disliked');
+                    setData({ liked, disliked: true, starred, solved });
+                    return;
+                }
+            }
+            if (liked) {
+                if (onLike) {
+                    // just unlike -> like-1
+                    const newLikes = problemDoc.data().likes - 1;
+                    transaction.update(problemDocRef, { likes: newLikes });
+                    transaction.update(userDocRef, {
+                        likedProblems: userDoc.data().likedProblems.filter((id: string) => id !== problem.id)
+                    });
+                    console.log('Unliked');
+                    setData({ liked: false, disliked, starred, solved });
+                    return;
+                }
+                if (onDislike) {
+                    // unlike and dislike -> like-1, dislike+1
+                    const newLikes = problemDoc.data().likes - 1;
+                    const newDislikes = problemDoc.data().dislikes + 1;
+                    transaction.update(problemDocRef, {
+                        likes: newLikes, dislikes: newDislikes
+                    });
+                    transaction.update(userDocRef, {
+                        likedProblems: userDoc.data().likedProblems.filter((id: string) => id !== problem.id),
+                        dislikedProblems: [...userDoc.data().dislikedProblems, problem.id]
+                    });
+                    console.log('Disliked');
+                    setData({ liked: false, disliked: true, starred, solved });
+                    return;
+                }
+            }
+            if (disliked) {
+                if (onLike) {
+                    // un-dislike and like -> like+1, dislike-1
+                    const newLikes = problemDoc.data().likes + 1;
+                    const newDislikes = problemDoc.data().dislikes - 1;
+                    transaction.update(problemDocRef, {
+                        likes: newLikes, dislikes: newDislikes
+                    });
+                    transaction.update(userDocRef, {
+                        likedProblems: [...userDoc.data().likedProblems, problem.id],
+                        dislikedProblems: userDoc.data().dislikedProblems.filter((id: string) => id !== problem.id)
+                    });
+                    console.log('Liked');
+                    setData({ liked: true, disliked: false, starred, solved });
+                    return;
+                }
+                if (onDislike) {
+                    // just un-dislike -> dislike-1
+                    const newDislikes = problemDoc.data().dislikes - 1;
+                    transaction.update(problemDocRef, { dislikes: newDislikes });
+                    transaction.update(userDocRef, {
+                        dislikedProblems: userDoc.data().dislikedProblems.filter((id: string) => id !== problem.id)
+                    });
+                    console.log('Unliked');
+                    setData({ liked, disliked: false, starred, solved });
+                    return;
+                }
+            }
+        })
+    };
 
-    }
+    const handleLike = () => {
+        handleClick({ onLike: true });
+    };
+
+    const handleDislike = () => {
+        handleClick({ onDislike: true });
+    };
 
     const difficultyClassMap = {
         Easy: 'text-green-500 bg-green-700',
@@ -76,7 +152,7 @@ const Description = ({ problem }: DescriptionProps) => {
                         <div className='flex'>
                             <div className='flex-1 text-lg text-white font-medium'>{problem.title}</div>
                         </div>
-                        {currProblem && (
+                        {currProblem && !loading && (
                             <div className='flex items-center mt-2'>
                                 <div
                                     className={`px-3 py-1 rounded-3xl bg-opacity-50 text-xs ${difficultyClassMap[currProblem.difficulty as ('Easy' | 'Medium' | 'Hard')]}`}
@@ -90,7 +166,7 @@ const Description = ({ problem }: DescriptionProps) => {
                                     <AiFillLike className={`${liked ? 'text-green-500' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.likes}</span>
                                 </div>
-                                <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer'>
+                                <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer' onClick={handleDislike} >
                                     <AiFillDislike className={`${disliked ? 'text-red-400' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.dislikes}</span>
                                 </div>
