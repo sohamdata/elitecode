@@ -54,7 +54,7 @@ const Signup = (props: SignupProps) => {
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 likedProblems: [],
-                disLikedProblems: [],
+                dislikedProblems: [],
                 solvedProblems: [],
                 starredProblems: [],
             };
