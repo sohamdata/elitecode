@@ -4,16 +4,39 @@ import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import useGetProblemById from "@/utils/hooks/useGetProblemById";
 import useProblemStatus from "@/utils/hooks/useProblemStatus";
+import { toast } from "react-hot-toast";
 
 interface DescriptionProps {
     problem: Problem,
 };
 
 const Description = ({ problem }: DescriptionProps) => {
+
     const { currProblem, loading, error } = useGetProblemById(problem.id);
-    const { liked, disliked, starred, solved, loading: statusLoading, setData } = useProblemStatus(problem.id);
-    const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
-    console.log(data);
+    const { user, liked, disliked, starred, solved, loading: statusLoading, setData } = useProblemStatus(problem.id);
+    // const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
+    // console.log(data);
+
+    const handleLike = async () => {
+        if (!user) {
+            toast.error('If you like this problem that much, you should login first');
+            return;
+        }
+        // firebase transactions
+        // not liked (and not dislied) -> like+1
+        if (!liked && !disliked) {
+            return;
+        }
+        // already liked -> like-1
+        if (liked) {
+            return;
+        }
+        // disliked -> like+1, dislike-1
+        if (disliked) {
+            return;
+        }
+
+    }
 
     const difficultyClassMap = {
         Easy: 'text-green-500 bg-green-700',
@@ -42,19 +65,19 @@ const Description = ({ problem }: DescriptionProps) => {
                                 >
                                     {currProblem.difficulty}
                                 </div>
-                                <div className='p-1 ml-4 text-lg cursor-pointer text-orange-500'>
-                                    <BsCheck2Circle />
+                                <div className='p-1 ml-4 text-lg cursor-pointer'>
+                                    <BsCheck2Circle className={`${solved ? 'text-green-500' : 'text-orange-500'}`} />
                                 </div>
-                                <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer'>
-                                    <AiFillLike />
+                                <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer' onClick={handleLike} >
+                                    <AiFillLike className={`${liked ? 'text-green-500' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.likes}</span>
                                 </div>
                                 <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer'>
-                                    <AiFillDislike />
+                                    <AiFillDislike className={`${disliked ? 'text-red-400' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.dislikes}</span>
                                 </div>
                                 <div className='px-2 py-1 ml-4 text-lg rounded-md hover:bg-dark-layer-2 text-gray-300 cursor-pointer'>
-                                    <TiStarOutline />
+                                    <TiStarOutline className={`${starred ? 'text-yellow-500' : ''}`} />
                                 </div>
                             </div>
                         )}

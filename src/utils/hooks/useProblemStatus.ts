@@ -34,7 +34,7 @@ const useProblemStatus = (problemId: string) => {
 
     }, [loading, problemId, user]);
 
-    return { ...data, loading, error, setData };
+    return { ...data, loading, error, setData, user };
 }
 
 export default useProblemStatus;
