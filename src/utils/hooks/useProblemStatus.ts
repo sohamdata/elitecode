@@ -8,7 +8,6 @@ const useProblemStatus = (problemId: string) => {
     const [data, setData] = useState({ liked: false, disliked: false, starred: false, solved: false });
     const [user] = useAuthState(auth);
 
-
     const docRef = user ? doc(firestore, 'users', user.uid) : null;
     const [value, loading, error] = useDocument(docRef, {
         snapshotListenOptions: { includeMetadataChanges: true },

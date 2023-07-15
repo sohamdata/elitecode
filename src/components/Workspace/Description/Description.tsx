@@ -4,7 +4,9 @@ import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import useGetProblemById from "@/utils/hooks/useGetProblemById";
 import useProblemStatus from "@/utils/hooks/useProblemStatus";
+import { doc, runTransaction } from "firebase/firestore";
 import { toast } from "react-hot-toast";
+import { firestore } from "@/firebase/firebase";
 
 interface DescriptionProps {
     problem: Problem,
@@ -25,6 +27,22 @@ const Description = ({ problem }: DescriptionProps) => {
         // firebase transactions
         // not liked (and not dislied) -> like+1
         if (!liked && !disliked) {
+            try {
+                await runTransaction(firestore, async (transaction) => {
+                    const sfDocRef = doc(firestore, "problems", currProblem!.id);
+                    const sfDoc = await transaction.get(sfDocRef);
+                    if (!sfDoc.exists()) {
+                        throw "Document does not exist!";
+                    }
+                    const newPopulation = sfDoc.data().likes + 1;
+                    transaction.update(sfDocRef, { likes: newPopulation });
+                });
+                // console.log("Transaction successfully committed!");
+                toast.success('Liked');
+            } catch (e) {
+                console.log("Transaction failed: ", e);
+            }
+
             return;
         }
         // already liked -> like-1
