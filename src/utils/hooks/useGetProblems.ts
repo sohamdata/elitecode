@@ -21,7 +21,7 @@ const useGetProblems = () => {
             });
             setProbsArray(newArray);
         }
-    }, [value]);
+    }, [loading]);
 
     return { probsArray, loading, error };
 };
