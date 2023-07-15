@@ -3,6 +3,7 @@ import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import useGetProblemById from "@/utils/hooks/useGetProblemById";
+import useProblemStatus from "@/utils/hooks/useProblemStatus";
 
 interface DescriptionProps {
     problem: Problem,
@@ -10,7 +11,9 @@ interface DescriptionProps {
 
 const Description = ({ problem }: DescriptionProps) => {
     const { currProblem, loading, error } = useGetProblemById(problem.id);
-    if (!loading) console.log(currProblem);
+    const { liked, disliked, starred, solved, loading: statusLoading, setData } = useProblemStatus(problem.id);
+    const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
+    console.log(data);
 
     const difficultyClassMap = {
         Easy: 'text-green-500 bg-green-700',
@@ -20,7 +23,6 @@ const Description = ({ problem }: DescriptionProps) => {
 
     return (
         <div className='bg-dark-layer-1'>
-
             <div className='flex h-11 w-full items-center pt-3 bg-dark-layer-2 text-white overflow-x-hidden'>
                 <div className="px-5 py-2 bg-dark-layer-1 rounded-t-lg text-xs">
                     Description
