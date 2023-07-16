@@ -15,6 +15,7 @@ interface DescriptionProps {
 interface handleClickProps {
     onLike?: boolean,
     onDislike?: boolean,
+    onStar?: boolean,
 };
 
 const Description = ({ problem }: DescriptionProps) => {
@@ -24,7 +25,7 @@ const Description = ({ problem }: DescriptionProps) => {
     // const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
     // console.log(data);
 
-    const handleClick = async ({ onLike, onDislike }: handleClickProps) => {
+    const handleClick = async ({ onLike, onDislike, onStar }: handleClickProps) => {
         if (!user) {
             onLike ?
                 toast.error('If you like that problem that much, you should login first') :
@@ -39,6 +40,27 @@ const Description = ({ problem }: DescriptionProps) => {
 
             if (!problemDoc.exists() || !userDoc.exists()) {
                 throw "Document does not exist!";
+            }
+
+            if (onStar) {
+                if (starred) {
+                    // unstar -> remove from users starredProblems
+                    transaction.update(userDocRef, {
+                        starredProblems: userDoc.data().starredProblems.filter((id: string) => id !== problem.id)
+                    });
+                    console.log('Unstarred');
+                    setData({ liked, disliked, starred: false, solved });
+                    return;
+                }
+                else {
+                    // star -> add to users starredProblems
+                    transaction.update(userDocRef, {
+                        starredProblems: [...userDoc.data().starredProblems, problem.id]
+                    });
+                    console.log('Starred');
+                    setData({ liked, disliked, starred: true, solved });
+                    return;
+                }
             }
 
             if (!liked && !disliked) {
@@ -138,6 +160,10 @@ const Description = ({ problem }: DescriptionProps) => {
         handleClick({ onDislike: true });
     };
 
+    const handleStar = () => {
+        handleClick({ onStar: true });
+    };
+
     const difficultyClassMap = {
         Easy: 'text-green-500 bg-green-700',
         Medium: 'text-yellow-500 bg-yellow-700',
@@ -176,7 +202,7 @@ const Description = ({ problem }: DescriptionProps) => {
                                     <AiFillDislike className={`${disliked ? 'text-red-400' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.dislikes}</span>
                                 </div>
-                                <div className='px-2 py-1 ml-4 text-lg rounded-md hover:bg-dark-layer-2 text-gray-300 cursor-pointer'>
+                                <div className='px-2 py-1 ml-4 text-lg rounded-md hover:bg-dark-layer-2 text-gray-300 cursor-pointer' onClick={handleStar} >
                                     <TiStarOutline className={`${starred ? 'text-yellow-500' : ''}`} />
                                 </div>
                             </div>
