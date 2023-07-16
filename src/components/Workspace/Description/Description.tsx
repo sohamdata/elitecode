@@ -204,20 +204,20 @@ const Description = ({ problem }: DescriptionProps) => {
                                     <BsCheck2Circle className={`${solved ? 'text-green-500' : 'text-orange-500'}`} />
                                 </div>
                                 <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer' onClick={handleLike} >
-                                    <AiFillLike className={`${liked ? 'text-green-500' : ''}`} />
+                                    <AiFillLike className={`${liked ? 'text-green-500' : updatingLock ? 'animate-ping' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.likes}</span>
                                 </div>
                                 <div className='p-1 ml-4 flex items-center rounded-md hover:bg-dark-layer-2 text-md text-gray-300 cursor-pointer' onClick={handleDislike} >
-                                    <AiFillDislike className={`${disliked ? 'text-red-400' : ''}`} />
+                                    <AiFillDislike className={`${disliked ? 'text-red-400' : updatingLock ? 'animate-ping' : ''}`} />
                                     <span className='ml-1 text-xs'>{currProblem.dislikes}</span>
                                 </div>
                                 <div className='px-2 py-1 ml-4 text-lg rounded-md hover:bg-dark-layer-2 text-gray-300 cursor-pointer' onClick={handleStar} >
-                                    <TiStarOutline className={`${starred ? 'text-yellow-500' : ''}`} />
+                                    <TiStarOutline className={`${starred ? 'text-yellow-500' : updatingLock ? 'animate-ping' : ''}`} />
                                 </div>
                             </div>
                         )}
                         {loading && (
-                            <div className='flex items-center mt-2'>
+                            <div className='flex items-center mt-2 animate-pulse'>
                                 <div
                                     className={`px-3 py-1 rounded-3xl bg-opacity-50 text-xs text-green-500 bg-green-700`}
                                 >
