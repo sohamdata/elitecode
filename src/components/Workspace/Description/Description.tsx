@@ -19,7 +19,7 @@ interface handleClickProps {
 
 const Description = ({ problem }: DescriptionProps) => {
 
-    const { currProblem, loading, error } = useGetProblemById(problem.id);
+    const { currProblem, loading, error, setCurrProblem } = useGetProblemById(problem.id);
     const { user, liked, disliked, starred, solved, loading: statusLoading, setData } = useProblemStatus(problem.id);
     // const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
     // console.log(data);
@@ -43,7 +43,7 @@ const Description = ({ problem }: DescriptionProps) => {
 
             if (!liked && !disliked) {
                 if (onLike) {
-                    // just like -> like+1
+                    // just like -> like+1 ; add to users likedProblems
                     const newLikes = problemDoc.data().likes + 1;
                     transaction.update(problemDocRef, { likes: newLikes });
                     transaction.update(userDocRef, {
@@ -51,10 +51,11 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Liked');
                     setData({ liked: true, disliked, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, likes: prev!.likes + 1 }));
                     return;
                 }
                 if (onDislike) {
-                    // just dislike -> dislike+1
+                    // just dislike -> dislike+1 ; add to users dislikedProblems
                     const newDislikes = problemDoc.data().dislikes + 1;
                     transaction.update(problemDocRef, { dislikes: newDislikes });
                     transaction.update(userDocRef, {
@@ -62,12 +63,13 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Disliked');
                     setData({ liked, disliked: true, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, dislikes: prev!.dislikes + 1 }));
                     return;
                 }
             }
             if (liked) {
                 if (onLike) {
-                    // just unlike -> like-1
+                    // just unlike -> like-1 ; remove from users likedProblems
                     const newLikes = problemDoc.data().likes - 1;
                     transaction.update(problemDocRef, { likes: newLikes });
                     transaction.update(userDocRef, {
@@ -75,10 +77,11 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Unliked');
                     setData({ liked: false, disliked, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, likes: prev!.likes - 1 }));
                     return;
                 }
                 if (onDislike) {
-                    // unlike and dislike -> like-1, dislike+1
+                    // unlike and dislike -> like-1, dislike+1 ; remove from users likedProblems, add to users dislikedProblems
                     const newLikes = problemDoc.data().likes - 1;
                     const newDislikes = problemDoc.data().dislikes + 1;
                     transaction.update(problemDocRef, {
@@ -90,12 +93,13 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Disliked');
                     setData({ liked: false, disliked: true, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, likes: prev!.likes - 1, dislikes: prev!.dislikes + 1 }));
                     return;
                 }
             }
             if (disliked) {
                 if (onLike) {
-                    // un-dislike and like -> like+1, dislike-1
+                    // un-dislike and like -> like+1, dislike-1 ; add to users likedProblems, remove from users dislikedProblems
                     const newLikes = problemDoc.data().likes + 1;
                     const newDislikes = problemDoc.data().dislikes - 1;
                     transaction.update(problemDocRef, {
@@ -107,10 +111,11 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Liked');
                     setData({ liked: true, disliked: false, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, likes: prev!.likes + 1, dislikes: prev!.dislikes - 1 }));
                     return;
                 }
                 if (onDislike) {
-                    // just un-dislike -> dislike-1
+                    // just un-dislike -> dislike-1 ; remove from users dislikedProblems
                     const newDislikes = problemDoc.data().dislikes - 1;
                     transaction.update(problemDocRef, { dislikes: newDislikes });
                     transaction.update(userDocRef, {
@@ -118,6 +123,7 @@ const Description = ({ problem }: DescriptionProps) => {
                     });
                     console.log('Unliked');
                     setData({ liked, disliked: false, starred, solved });
+                    setCurrProblem(prev => ({ ...prev!, dislikes: prev!.dislikes - 1 }));
                     return;
                 }
             }

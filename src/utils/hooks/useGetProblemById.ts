@@ -24,7 +24,7 @@ const useGetProblemById = (pid: string) => {
         }
     }, [loading]);
 
-    return { currProblem, loading, error };
+    return { currProblem, loading, error, setCurrProblem };
 };
 
 export default useGetProblemById;
