@@ -1,6 +1,7 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Router from "next/router";
 import { useState } from "react";
 import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -9,6 +10,7 @@ import { authModalState } from '@/atoms/authModalAtom';
 import { useSetRecoilState } from 'recoil';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from "react-icons/bs";
+import { problems } from "@/utils/problems";
 const CustomTooltip = dynamic(() => import('../CustomToolTip/CustomToolTip'), { ssr: false });
 
 type TopbarProps = {
@@ -24,6 +26,24 @@ const Topbar = ({ problemPage }: TopbarProps) => {
         setAuthModalState((prev) => ({ ...prev, isOpen: true, mode: "login" }));
     }
 
+    interface ProblemChangeProps {
+        isForward?: boolean;
+        isBackward?: boolean;
+    }
+
+    const handleProblemChange = ({ isForward, isBackward }: ProblemChangeProps) => {
+        const { order } = problems[Router.query.pid as string];
+        const direction = isForward ? 1 : -1;
+        const nextProbOrder = order + direction;
+
+    }
+    const goBackward = () => {
+        handleProblemChange({ isBackward: true });
+    }
+    const goForward = () => {
+        handleProblemChange({ isForward: true });
+    }
+
     return (
         <>
             <div className="flex items-center justify-between w-full px-7 bg-dark-layer-1">
@@ -33,14 +53,14 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                 {problemPage && (
                     <div className="ml-28 flex items-center justify-center gap-2">
                         <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
-                            <FaChevronLeft />
+                            <FaChevronLeft onClick={goBackward} />
                         </div>
                         <Link href="/" className="flex items-center whitespace-nowrap rounded font-medium max-w-[170px] text-amber-500 hover:text-sky-600 cursor-pointer">
                             <BsList />
                             <p className="ml-2">All Problems</p>
                         </Link>
                         <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
-                            <FaChevronRight />
+                            <FaChevronRight onClick={goForward} />
                         </div>
                     </div>
                 )}
