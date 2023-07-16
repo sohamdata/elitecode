@@ -1,12 +1,13 @@
+import { useState } from "react";
+import { firestore } from "@/firebase/firebase";
+import { doc, runTransaction } from "firebase/firestore";
 import { Problem } from "@/utils/types/problem";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import useGetProblemById from "@/utils/hooks/useGetProblemById";
 import useProblemStatus from "@/utils/hooks/useProblemStatus";
-import { doc, runTransaction } from "firebase/firestore";
 import { toast } from "react-hot-toast";
-import { firestore } from "@/firebase/firebase";
 
 interface DescriptionProps {
     problem: Problem,
@@ -22,8 +23,7 @@ const Description = ({ problem }: DescriptionProps) => {
 
     const { currProblem, loading, error, setCurrProblem } = useGetProblemById(problem.id);
     const { user, liked, disliked, starred, solved, loading: statusLoading, setData } = useProblemStatus(problem.id);
-    // const data = { liked, disliked, starred, solved, loading: statusLoading, setData };
-    // console.log(data);
+    const [updatingLock, setUpdatingLock] = useState(false);
 
     const handleClick = async ({ onLike, onDislike, onStar }: handleClickProps) => {
         if (!user) {
@@ -32,6 +32,13 @@ const Description = ({ problem }: DescriptionProps) => {
                 toast.error('If you hate that problem that much, you should login first');
             return;
         }
+
+        if (updatingLock) {
+            console.log('Updating');
+            return;
+        }
+
+        setUpdatingLock(true);
         await runTransaction(firestore, async (transaction) => {
             const problemDocRef = doc(firestore, "problems", problem.id);
             const userDocRef = doc(firestore, "users", user.uid);
@@ -143,13 +150,15 @@ const Description = ({ problem }: DescriptionProps) => {
                     transaction.update(userDocRef, {
                         dislikedProblems: userDoc.data().dislikedProblems.filter((id: string) => id !== problem.id)
                     });
-                    console.log('Unliked');
+                    console.log('Un-disliked');
                     setData({ liked, disliked: false, starred, solved });
                     setCurrProblem(prev => ({ ...prev!, dislikes: prev!.dislikes - 1 }));
                     return;
                 }
             }
         })
+        setUpdatingLock(false);
+
     };
 
     const handleLike = () => {
