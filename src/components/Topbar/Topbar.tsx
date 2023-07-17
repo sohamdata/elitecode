@@ -26,22 +26,27 @@ const Topbar = ({ problemPage }: TopbarProps) => {
         setAuthModalState((prev) => ({ ...prev, isOpen: true, mode: "login" }));
     }
 
-    interface ProblemChangeProps {
-        isForward?: boolean;
-        isBackward?: boolean;
-    }
-
-    const handleProblemChange = ({ isForward, isBackward }: ProblemChangeProps) => {
+    const handleProblemChange = (isForward: boolean) => {
         const { order } = problems[Router.query.pid as string];
         const direction = isForward ? 1 : -1;
         const nextProbOrder = order + direction;
-
+        const nextProbId = Object.keys(problems).find((key) => problems[key].order === nextProbOrder);
+        if (nextProbId) {
+            Router.push(`/problems/${nextProbId}`);
+            return;
+        }
+        if (isForward) {
+            Router.push(`/problems/${Object.keys(problems)[0]}`);
+        } else {
+            Router.push(`/problems/${Object.keys(problems).slice(-1)[0]}`);
+        }
     }
+
     const goBackward = () => {
-        handleProblemChange({ isBackward: true });
+        handleProblemChange(false);
     }
     const goForward = () => {
-        handleProblemChange({ isForward: true });
+        handleProblemChange(true);
     }
 
     return (
@@ -52,15 +57,15 @@ const Topbar = ({ problemPage }: TopbarProps) => {
                 </Link>
                 {problemPage && (
                     <div className="ml-28 flex items-center justify-center gap-2">
-                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
-                            <FaChevronLeft onClick={goBackward} />
+                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer" onClick={goBackward} >
+                            <FaChevronLeft />
                         </div>
                         <Link href="/" className="flex items-center whitespace-nowrap rounded font-medium max-w-[170px] text-amber-500 hover:text-sky-600 cursor-pointer">
                             <BsList />
                             <p className="ml-2">All Problems</p>
                         </Link>
-                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer">
-                            <FaChevronRight onClick={goForward} />
+                        <div className="p-2 flex items-center justify-center rounded text-amber-500 hover:bg-zinc-700 cursor-pointer" onClick={goForward} >
+                            <FaChevronRight />
                         </div>
                     </div>
                 )}
