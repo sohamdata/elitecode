@@ -4,7 +4,7 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { firestore } from "@/firebase/firebase";
 import { ProblemDoc } from "../types/problem";
 
-const useGetProblemById = (pid: string) => {
+export default function useGetProblemById(pid: string) {
     const docRef = doc(firestore, 'problems', pid);
 
     const [value, loading, error] = useDocument(docRef, {
@@ -26,5 +26,3 @@ const useGetProblemById = (pid: string) => {
 
     return { currProblem, loading, error, setCurrProblem };
 };
-
-export default useGetProblemById;

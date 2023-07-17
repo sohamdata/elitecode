@@ -4,7 +4,7 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from "@/firebase/firebase";
 import { ProblemDoc } from "../types/problem";
 
-const useGetProblems = () => {
+export default function useGetProblems() {
     const problemsCollectionRef = collection(firestore, 'problems');
     const problemsQuery = query(problemsCollectionRef, orderBy('order', 'asc'));
     const [value, loading, error] = useCollection(problemsQuery, {
@@ -25,5 +25,3 @@ const useGetProblems = () => {
 
     return { probsArray, loading, error };
 };
-
-export default useGetProblems;

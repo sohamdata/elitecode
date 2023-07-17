@@ -4,7 +4,7 @@ import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const useProblemStatus = (problemId: string) => {
+export default function useProblemStatus(problemId: string) {
     const [data, setData] = useState({ liked: false, disliked: false, starred: false, solved: false });
     const [user] = useAuthState(auth);
 
@@ -35,5 +35,3 @@ const useProblemStatus = (problemId: string) => {
 
     return { ...data, loading, error, setData, user };
 }
-
-export default useProblemStatus;
