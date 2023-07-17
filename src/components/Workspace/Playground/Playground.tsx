@@ -8,6 +8,8 @@ import PlaygroundFooter from './PlaygroundFooter';
 import { Problem } from '@/utils/types/problem';
 import { auth } from '@/firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { firestore } from "@/firebase/firebase";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import { problems } from '@/utils/problems';
 
@@ -21,6 +23,46 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [currCase, setcurrCase] = useState(0);
     const [userCode, setUserCode] = useState(problem.starterCode);
     const currProblem = problem.id;
+
+    function runCode() {
+        try {
+            const callBackFunction = new Function(`return ${userCode}`)();
+            const testCode = problems[currProblem].handlerFunction(callBackFunction);
+            if (testCode) {
+                toast.success('Your code passed all test cases');
+                onSuccess(true);
+                setTimeout(() => {
+                    onSuccess(false);
+                }, 3000);
+            }
+        } catch (error: any) {
+            if (error.toString().includes('AssertionError')) {
+                toast.error(`One or more test cases failed. See console (ctrl+shift+j) for more details.`);
+            } else {
+                toast.error(`Runtime Error: See console (ctrl+shift+j) for more details.`);
+            }
+        }
+    }
+
+    const handleRun = async () => {
+        try {
+            const callBackFunction = new Function(`return ${userCode}`)();
+            const testCode = problems[currProblem].handlerFunction(callBackFunction);
+            if (testCode) {
+                toast.success('Your code passed all test cases');
+                onSuccess(true);
+                setTimeout(() => {
+                    onSuccess(false);
+                }, 3000);
+            }
+        } catch (error: any) {
+            if (error.toString().includes('AssertionError')) {
+                toast.error(`One or more test cases failed. See console (ctrl+shift+j) for more details.`);
+            } else {
+                toast.error(`Runtime Error: See console (ctrl+shift+j) for more details.`);
+            }
+        }
+    }
 
     const handleSubmit = async () => {
         if (!user) {
@@ -37,6 +79,12 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
                 setTimeout(() => {
                     onSuccess(false);
                 }, 3000);
+                console.log("no error till here");
+                const userDocRef = doc(firestore, "users", user.uid);
+                await updateDoc(userDocRef, {
+                    solvedProblems: arrayUnion(currProblem)
+                });
+                console.log("error maybe");
             }
         } catch (error: any) {
             if (error.toString().includes('AssertionError')) {
