@@ -1,8 +1,10 @@
 import { BsChevronUp } from "react-icons/bs";
 
-type FooterProps = {};
+type FooterProps = {
+    onSubmit: () => void;
+};
 
-const PlaygroundFooter = (props: FooterProps) => {
+const PlaygroundFooter = ({ onSubmit }: FooterProps) => {
     return (
         <div className="absolute z-10 bottom-0 w-full bg-dark-layer-1">
             <div className="mx-5 my-2.5 flex justify-between">
@@ -14,10 +16,14 @@ const PlaygroundFooter = (props: FooterProps) => {
                 </div>
                 <div className="flex items-center space-x-3">
                     <div className="flex items-center px-3 py-1 bg-neutral-500 rounded-lg text-sm text-white font-medium transition-all hover:bg-neutral-600 cursor-pointer">
-                        Run
+                        <button onClick={onSubmit}>
+                            Run
+                        </button>
                     </div>
                     <div className="flex items-center px-3 py-1 bg-green-700 rounded-lg text-sm text-white font-medium transition-all hover:bg-green-800 cursor-pointer">
-                        Submit
+                        <button onClick={onSubmit}>
+                            Submit
+                        </button>
                     </div>
                 </div>
             </div>

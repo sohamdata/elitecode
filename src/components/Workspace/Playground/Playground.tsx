@@ -6,13 +6,50 @@ import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { javascript } from '@codemirror/lang-javascript';
 import PlaygroundFooter from './PlaygroundFooter';
 import { Problem } from '@/utils/types/problem';
+import { auth } from '@/firebase/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import toast from 'react-hot-toast';
+import { problems } from '@/utils/problems';
 
 interface PlaygroundProps {
-    problem: Problem,
+    problem: Problem;
+    onSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Playground = ({ problem }: PlaygroundProps) => {
+const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
+    const [user] = useAuthState(auth);
     const [currCase, setcurrCase] = useState(0);
+    const [userCode, setUserCode] = useState(problem.starterCode);
+    const currProblem = problem.id;
+
+    const handleSubmit = async () => {
+        if (!user) {
+            toast.error('You must be logged in to submit');
+            return;
+        }
+
+        try {
+            const callBackFunction = new Function(`return ${userCode}`)();
+            const testCode = problems[currProblem].handlerFunction(callBackFunction);
+            if (testCode) {
+                toast.success('Your code passed all test cases');
+                onSuccess(true);
+                setTimeout(() => {
+                    onSuccess(false);
+                }, 3000);
+            }
+        } catch (error: any) {
+            if (error.toString().includes('AssertionError')) {
+                toast.error(`One or more test cases failed. See console (ctrl+shift+j) for more details.`);
+            } else {
+                toast.error(`Runtime Error: See console (ctrl+shift+j) for more details.`);
+            }
+        }
+    }
+
+    const onCodeChange = (code: string) => {
+        setUserCode(code);
+    }
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden z-0">
@@ -20,10 +57,11 @@ const Playground = ({ problem }: PlaygroundProps) => {
             <Split className="h-[calc(100vh-94px)]" direction="vertical" sizes={[60, 40]} minSize={60}>
                 <div className="w-full overflow-auto">
                     <CodeMirror
-                        value={problem.starterCode}
+                        value={userCode}
                         theme={vscodeDark}
                         extensions={[javascript()]}
                         style={{ fontSize: 14 }}
+                        onChange={onCodeChange}
                     />
                 </div>
 
@@ -68,7 +106,7 @@ const Playground = ({ problem }: PlaygroundProps) => {
                     </div>
                 </div>
             </Split>
-            <PlaygroundFooter />
+            <PlaygroundFooter onSubmit={handleSubmit} />
         </div >
     )
 }
