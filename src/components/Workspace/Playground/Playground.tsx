@@ -24,36 +24,12 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [userCode, setUserCode] = useState(problem.starterCode);
     const currProblem = problem.id;
 
-    function runCode() {
-        try {
-            const callBackFunction = new Function(`return ${userCode}`)();
-            const testCode = problems[currProblem].handlerFunction(callBackFunction);
-            if (testCode) {
-                toast.success('Your code passed all test cases');
-                onSuccess(true);
-                setTimeout(() => {
-                    onSuccess(false);
-                }, 3000);
-            }
-        } catch (error: any) {
-            if (error.toString().includes('AssertionError')) {
-                toast.error(`One or more test cases failed. See console (ctrl+shift+j) for more details.`);
-            } else {
-                toast.error(`Runtime Error: See console (ctrl+shift+j) for more details.`);
-            }
-        }
-    }
-
     const handleRun = async () => {
         try {
             const callBackFunction = new Function(`return ${userCode}`)();
             const testCode = problems[currProblem].handlerFunction(callBackFunction);
             if (testCode) {
                 toast.success('Your code passed all test cases');
-                onSuccess(true);
-                setTimeout(() => {
-                    onSuccess(false);
-                }, 3000);
             }
         } catch (error: any) {
             if (error.toString().includes('AssertionError')) {
@@ -79,12 +55,10 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
                 setTimeout(() => {
                     onSuccess(false);
                 }, 3000);
-                console.log("no error till here");
                 const userDocRef = doc(firestore, "users", user.uid);
                 await updateDoc(userDocRef, {
                     solvedProblems: arrayUnion(currProblem)
                 });
-                console.log("error maybe");
             }
         } catch (error: any) {
             if (error.toString().includes('AssertionError')) {
@@ -154,7 +128,7 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
                     </div>
                 </div>
             </Split>
-            <PlaygroundFooter onSubmit={handleSubmit} />
+            <PlaygroundFooter onRun={handleRun} onSubmit={handleSubmit} />
         </div >
     )
 }
