@@ -21,11 +21,12 @@ interface PlaygroundProps {
 const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [user] = useAuthState(auth);
     const [currCase, setCurrCase] = useState(0);
-    const [userCode, setUserCode] = useState(problem.starterCode);
+    let [userCode, setUserCode] = useState(problem.starterCode);
     const currProblem = problem.id;
 
     const handleRun = async () => {
         try {
+            userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
             const callBackFunction = new Function(`return ${userCode}`)();
             const testCode = problems[currProblem].handlerFunction(callBackFunction);
             if (testCode) {
@@ -47,6 +48,7 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
         }
 
         try {
+            userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
             const callBackFunction = new Function(`return ${userCode}`)();
             const testCode = problems[currProblem].handlerFunction(callBackFunction);
             if (testCode) {
