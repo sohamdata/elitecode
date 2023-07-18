@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
 import { AiOutlineExpandAlt, AiOutlineSetting, AiOutlineShrink } from "react-icons/ai";
 const CustomTooltip = dynamic(() => import('../../CustomToolTip/CustomToolTip'), { ssr: false });
 
