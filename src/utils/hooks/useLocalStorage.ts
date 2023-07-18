@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 
-const useLocalStorage = (key: string, initialValue: string) => {
+export default function useLocalStorage(key: string, initialValue: string) {
     const [value, setValue] = useState(() => {
         try {
             if (typeof window !== "undefined") {
                 const item = window.localStorage.getItem(key);
                 if (item) {
-                    console.log("hit")
                     return JSON.parse(item);
                 } else {
-                    console.log("miss")
                     return initialValue;
                 }
             } else {
@@ -33,5 +31,3 @@ const useLocalStorage = (key: string, initialValue: string) => {
 
     return [value, setValue];
 };
-
-export default useLocalStorage;

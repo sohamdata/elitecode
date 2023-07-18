@@ -6,7 +6,7 @@ interface SettingsModalProps {
     onFontSizeChange: (fontSize: string) => void;
 }
 
-const Settings = ({ onClose, onFontSizeChange }: SettingsModalProps) => {
+const EditorSettings = ({ onClose, onFontSizeChange }: SettingsModalProps) => {
     const [fontSize, setFontSize] = useLocalStorage('editor-fontSize', "14px");
 
     const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -57,4 +57,4 @@ const Settings = ({ onClose, onFontSizeChange }: SettingsModalProps) => {
     );
 };
 
-export default Settings;
+export default EditorSettings;

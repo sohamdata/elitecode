@@ -2,6 +2,8 @@ import Topbar from "@/components/Topbar/Topbar";
 import Workspace from "@/components/Workspace/Workspace";
 import { problems } from "@/utils/problems";
 import { Problem } from "@/utils/types/problem";
+// import dynamic from "next/dynamic";
+// const Workspace = dynamic(() => import("@/components/Workspace/Workspace"), { ssr: false });
 
 interface ProblemPageProps {
     problem: Problem,
