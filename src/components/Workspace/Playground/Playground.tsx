@@ -13,6 +13,7 @@ import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import { problems } from '@/utils/problems';
 import Settings from '@/components/Modals/EditorSettings';
+import useLocalStorage from '@/utils/hooks/useLocalStorage';
 
 interface PlaygroundProps {
     problem: Problem;
@@ -22,7 +23,7 @@ interface PlaygroundProps {
 const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [user] = useAuthState(auth);
     const [currCase, setCurrCase] = useState(0);
-    const [fontSize, setFontSize] = useState(14);
+    const [font_Size, setFontSize] = useLocalStorage('editor-fontSize', "14px");
     const [showSettingsModal, setShowSettingsModal] = useState(false);
     let [userCode, setUserCode] = useState(problem.starterCode);
     const currProblemId = problem.id;
@@ -82,7 +83,7 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
         }
     }
 
-    const handleFontSizeChange = (newSize: number) => {
+    const handleFontSizeChange = (newSize: string) => {
         setFontSize(newSize);
     };
 
@@ -117,7 +118,7 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
                         value={userCode}
                         theme={vscodeDark}
                         extensions={[javascript()]}
-                        style={{ fontSize: `${fontSize}px` }}
+                        style={{ fontSize: font_Size }}
                         onChange={onCodeChange}
                     />
                 </div>
@@ -166,7 +167,6 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
             <PlaygroundFooter onRun={handleRun} onSubmit={handleSubmit} />
             {showSettingsModal && (
                 <Settings
-                    fontSize={fontSize}
                     onClose={() => setShowSettingsModal(false)}
                     onFontSizeChange={handleFontSizeChange}
                 />

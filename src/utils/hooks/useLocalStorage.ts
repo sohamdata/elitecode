@@ -5,7 +5,13 @@ const useLocalStorage = (key: string, initialValue: string) => {
         try {
             if (typeof window !== "undefined") {
                 const item = window.localStorage.getItem(key);
-                return item ? JSON.parse(item) : initialValue;
+                if (item) {
+                    console.log("hit")
+                    return JSON.parse(item);
+                } else {
+                    console.log("miss")
+                    return initialValue;
+                }
             } else {
                 return initialValue;
             }

@@ -1,16 +1,18 @@
-import React from 'react';
 import { IoClose } from 'react-icons/io5';
+import useLocalStorage from '@/utils/hooks/useLocalStorage';
 
 interface SettingsModalProps {
-    fontSize: number;
     onClose: () => void;
-    onFontSizeChange: (fontSize: number) => void;
+    onFontSizeChange: (fontSize: string) => void;
 }
 
-const Settings = ({ fontSize, onClose, onFontSizeChange }: SettingsModalProps) => {
+const Settings = ({ onClose, onFontSizeChange }: SettingsModalProps) => {
+    const [fontSize, setFontSize] = useLocalStorage('editor-fontSize', "14px");
+
     const handleFontSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newSize = parseInt(event.target.value, 10);
-        onFontSizeChange(newSize);
+        onFontSizeChange(`${newSize}px`);
+        setFontSize(`${newSize}px`);
     };
 
     return (
@@ -38,7 +40,7 @@ const Settings = ({ fontSize, onClose, onFontSizeChange }: SettingsModalProps) =
                         </div>
                         <select
                             id="fontSize"
-                            value={fontSize}
+                            value={parseInt(fontSize, 10)}
                             onChange={handleFontSizeChange}
                             className="py-2 px-10 rounded-md bg-neutral-500 text-gray-100 outline-none cursor-pointer"
                         >
