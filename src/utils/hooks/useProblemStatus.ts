@@ -12,6 +12,14 @@ export default function useProblemStatus(problemId: string) {
     const [value, loading, error] = useDocument(docRef, {
         snapshotListenOptions: { includeMetadataChanges: true },
     });
+
+    const [solvedProbsArray, setSolvedProbsArray] = useState<string[]>([]);
+
+    useEffect(() => {
+        const solvedProbsArray: string[] = value?.data()?.solvedProblems || [];
+        setSolvedProbsArray(solvedProbsArray);
+    }, [loading]);
+
     useEffect(() => {
         const getData = async () => {
             if (user && value && value.exists()) {
@@ -33,5 +41,5 @@ export default function useProblemStatus(problemId: string) {
 
     }, [loading, problemId, user]);
 
-    return { ...data, loading, error, setData, user };
+    return { ...data, loading, error, setData, user, solvedProbsArray };
 }

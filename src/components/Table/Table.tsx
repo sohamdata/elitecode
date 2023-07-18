@@ -4,13 +4,14 @@ import { BsCheckCircle } from "react-icons/bs";
 import { AiFillYoutube } from "react-icons/ai";
 import YoutubeVideo from "../Modals/YoutubeVideo";
 import useGetProblems from "@/utils/hooks/useGetProblems";
+import useProblemStatus from "@/utils/hooks/useProblemStatus";
 
 type TableProps = {};
 
 const Table = (props: TableProps) => {
     const [ytmodal, setYtmodal] = useState(false);
     const [videoId, setVideoId] = useState("");
-
+    const { solvedProbsArray } = useProblemStatus('two-sum');
     const openVideoModal = (id: string) => {
         setVideoId(id);
         setYtmodal(true);
@@ -41,7 +42,12 @@ const Table = (props: TableProps) => {
                 <tbody>
                     {probsArray.map((problem, index) => (
                         <tr key={index} className='border-b'>
-                            <td className="px-4 py-4 pl-7 text-green-700"><BsCheckCircle size={20} /></td>
+                            {solvedProbsArray.includes(problem.id) ?
+                                <td className="px-4 py-4 pl-7 text-green-700"><BsCheckCircle size={20} /></td>
+                                :
+                                <td className="px-4 py-4 pl-7 text-gray-400"><BsCheckCircle size={20} /></td>
+                            }
+
                             <td className="px-4 py-4 hover:text-sky-500">
                                 {problem.link ?
                                     <Link href={problem.link} prefetch={false}>
@@ -81,8 +87,7 @@ const Skeleton = () => {
                     <div className='h-4 w-52 rounded-full bg-dark-layer-1'></div>
                     <div className='h-4 w-52 rounded-full bg-dark-layer-1'></div>
                     <div className='h-4 w-52 rounded-full bg-dark-layer-1'></div>
-                    <div className='h-4 w-52 rounded-full bg-dark-layer-1'></div>
-                    <span className='sr-only'>Loading...</span>
+                    <div className='h-5 w-10 rounded-full bg-dark-layer-1'></div>
                 </div>
             )}
         </div>
