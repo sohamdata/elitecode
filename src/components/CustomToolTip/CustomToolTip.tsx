@@ -13,6 +13,7 @@ const CustomTooltip = ({ id, content, place, child }: CustomTooltipProps) => {
             data-tooltip-id={id}
             data-tooltip-content={content}
             data-tooltip-place={place ?? 'bottom'}
+            className="z-40"
         >
             <Tooltip id={id} />
             {child}

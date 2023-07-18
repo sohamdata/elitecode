@@ -6,7 +6,7 @@ interface PreferenceNavProps { };
 
 const PreferenceNav = (props: PreferenceNavProps) => {
     return (
-        <div className='pt-2 h-11 w-full flex justify-between items-center bg-dark-layer-2 overflow-x-hidden'>
+        <div className='pt-2 h-11 w-full flex justify-between items-center bg-dark-layer-2 overflow-x-hidden z-50'>
             <div className="px-3 py-1.5 bg-dark-layer-1 rounded-lg text-xs text-white font-medium hover:bg-neutral-700 cursor-pointer">
                 JavaScript
             </div>
