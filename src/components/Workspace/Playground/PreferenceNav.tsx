@@ -4,9 +4,11 @@ import { toast } from "react-hot-toast";
 import { AiOutlineExpandAlt, AiOutlineSetting, AiOutlineShrink } from "react-icons/ai";
 const CustomTooltip = dynamic(() => import('../../CustomToolTip/CustomToolTip'), { ssr: false });
 
-interface PreferenceNavProps { };
+interface PreferenceNavProps {
+    onShowSettings: () => void;
+};
 
-const PreferenceNav = (props: PreferenceNavProps) => {
+const PreferenceNav = ({ onShowSettings }: PreferenceNavProps) => {
     const [isFullScreen, setIsFullScreen] = useState(false);
 
     const handleFullScreen = () => {
@@ -26,7 +28,7 @@ const PreferenceNav = (props: PreferenceNavProps) => {
             </div>
             <div className="mx-3 flex items-center space-x-2">
                 <div className="p-1 rounded-md text-slate-400 hover:bg-neutral-700 cursor-pointer">
-                    <button onClick={() => toast.error('TODO settings')}>
+                    <button onClick={onShowSettings}>
                         <CustomTooltip
                             id="tooltip-settings"
                             content="Settings"
@@ -38,7 +40,7 @@ const PreferenceNav = (props: PreferenceNavProps) => {
                     <button onClick={handleFullScreen}>
                         <CustomTooltip
                             id="tooltip-fs"
-                            content="FullScreen"
+                            content={!isFullScreen ? 'Fullscreen' : 'Exit Fullscreen'}
                             child={!isFullScreen ? <AiOutlineExpandAlt /> : <AiOutlineShrink />}
                         />
                     </button>

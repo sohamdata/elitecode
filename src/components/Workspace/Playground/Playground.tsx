@@ -12,6 +12,7 @@ import { firestore } from "@/firebase/firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import toast from 'react-hot-toast';
 import { problems } from '@/utils/problems';
+import Settings from '@/components/Modals/EditorSettings';
 
 interface PlaygroundProps {
     problem: Problem;
@@ -21,6 +22,8 @@ interface PlaygroundProps {
 const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [user] = useAuthState(auth);
     const [currCase, setCurrCase] = useState(0);
+    const [fontSize, setFontSize] = useState(14);
+    const [showSettingsModal, setShowSettingsModal] = useState(false);
     let [userCode, setUserCode] = useState(problem.starterCode);
     const currProblemId = problem.id;
 
@@ -79,6 +82,10 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
         }
     }
 
+    const handleFontSizeChange = (newSize: number) => {
+        setFontSize(newSize);
+    };
+
     useEffect(() => {
         const code = localStorage.getItem(`code-${currProblemId}`);
         if (code) {
@@ -103,14 +110,14 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden z-0">
-            <PreferenceNav />
+            <PreferenceNav onShowSettings={() => setShowSettingsModal(true)} />
             <Split className="h-[calc(100vh-94px)]" direction="vertical" sizes={[60, 40]} minSize={60}>
                 <div className="w-full overflow-auto">
                     <CodeMirror
                         value={userCode}
                         theme={vscodeDark}
                         extensions={[javascript()]}
-                        style={{ fontSize: 14 }}
+                        style={{ fontSize: `${fontSize}px` }}
                         onChange={onCodeChange}
                     />
                 </div>
@@ -157,6 +164,13 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
                 </div>
             </Split>
             <PlaygroundFooter onRun={handleRun} onSubmit={handleSubmit} />
+            {showSettingsModal && (
+                <Settings
+                    fontSize={fontSize}
+                    onClose={() => setShowSettingsModal(false)}
+                    onFontSizeChange={handleFontSizeChange}
+                />
+            )}
         </div >
     )
 }
