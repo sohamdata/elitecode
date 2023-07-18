@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Split from 'react-split';
 import PreferenceNav from "./PreferenceNav";
 import CodeMirror from '@uiw/react-codemirror';
@@ -20,7 +20,7 @@ interface PlaygroundProps {
 
 const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [user] = useAuthState(auth);
-    const [currCase, setcurrCase] = useState(0);
+    const [currCase, setCurrCase] = useState(0);
     const [userCode, setUserCode] = useState(problem.starterCode);
     const currProblem = problem.id;
 
@@ -69,9 +69,27 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
         }
     }
 
+    useEffect(() => {
+        const code = localStorage.getItem(`code-${currProblem}`);
+        if (code) {
+            setUserCode(JSON.parse(code));
+        }
+        else {
+            setUserCode(problem.starterCode);
+        }
+    }, [currProblem]);
+
     const onCodeChange = (code: string) => {
         setUserCode(code);
     }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            localStorage.setItem(`code-${currProblem}`, JSON.stringify(userCode));
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [currProblem, userCode]);
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden z-0">
@@ -95,10 +113,10 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
 
                     <div className='flex mt-2 space-x-4'>
                         {problem.examples.map((testcase, index) => (
-                            <div key={index} className={`px-3 py-1.5 
-                                ${currCase === index && 'bg-neutral-600'}
-                            rounded-lg text-white font-medium transition-all hover:bg-neutral-700 cursor-pointer`}
-                                onClick={() => setcurrCase(index)}>
+                            <div key={index} className={`px-3 py-1.5 ${currCase === index && 'bg-neutral-600'}
+                                rounded-lg text-white font-medium transition-all hover:bg-neutral-700 cursor-pointer`}
+                                onClick={() => setCurrCase(index)}
+                            >
                                 Case {index + 1}
                             </div>
                         ))
