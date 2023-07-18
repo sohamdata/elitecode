@@ -22,15 +22,19 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     const [user] = useAuthState(auth);
     const [currCase, setCurrCase] = useState(0);
     let [userCode, setUserCode] = useState(problem.starterCode);
-    const currProblem = problem.id;
+    const currProblemId = problem.id;
 
     const handleRun = async () => {
         try {
             userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
             const callBackFunction = new Function(`return ${userCode}`)();
-            const testCode = problems[currProblem].handlerFunction(callBackFunction);
-            if (testCode) {
-                toast.success('Your code passed all test cases');
+            const handlerFunction = problems[currProblemId].handlerFunction;
+
+            if (typeof handlerFunction === 'function') {
+                const testCode = handlerFunction(callBackFunction);
+                if (testCode) {
+                    toast.success('Your code passed all test cases');
+                }
             }
         } catch (error: any) {
             if (error.toString().includes('AssertionError')) {
@@ -50,17 +54,21 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
         try {
             userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
             const callBackFunction = new Function(`return ${userCode}`)();
-            const testCode = problems[currProblem].handlerFunction(callBackFunction);
-            if (testCode) {
-                toast.success('Your code passed all test cases');
-                onSuccess(true);
-                setTimeout(() => {
-                    onSuccess(false);
-                }, 3000);
-                const userDocRef = doc(firestore, "users", user.uid);
-                await updateDoc(userDocRef, {
-                    solvedProblems: arrayUnion(currProblem)
-                });
+            const handlerFunction = problems[currProblemId].handlerFunction;
+
+            if (typeof handlerFunction === 'function') {
+                const testCode = handlerFunction(callBackFunction);
+                if (testCode) {
+                    toast.success('Your code passed all test cases');
+                    onSuccess(true);
+                    setTimeout(() => {
+                        onSuccess(false);
+                    }, 3000);
+                    const userDocRef = doc(firestore, "users", user.uid);
+                    await updateDoc(userDocRef, {
+                        solvedProblems: arrayUnion(currProblemId)
+                    });
+                }
             }
         } catch (error: any) {
             if (error.toString().includes('AssertionError')) {
@@ -72,14 +80,14 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
     }
 
     useEffect(() => {
-        const code = localStorage.getItem(`code-${currProblem}`);
+        const code = localStorage.getItem(`code-${currProblemId}`);
         if (code) {
             setUserCode(JSON.parse(code));
         }
         else {
             setUserCode(problem.starterCode);
         }
-    }, [currProblem]);
+    }, [currProblemId]);
 
     const onCodeChange = (code: string) => {
         setUserCode(code);
@@ -87,11 +95,11 @@ const Playground = ({ problem, onSuccess }: PlaygroundProps) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            localStorage.setItem(`code-${currProblem}`, JSON.stringify(userCode));
+            localStorage.setItem(`code-${currProblemId}`, JSON.stringify(userCode));
         }, 3000);
 
         return () => clearInterval(interval);
-    }, [currProblem, userCode]);
+    }, [currProblemId, userCode]);
 
     return (
         <div className="flex flex-col bg-dark-layer-1 relative overflow-x-hidden z-0">
