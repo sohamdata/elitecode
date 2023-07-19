@@ -11,11 +11,11 @@ const ForgotPassword = (props: ForgotPasswordProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!email) return toast.error("not funny, provide your email.");
+        if (!email) return toast.error("not funny, please provide your email.");
         try {
             const success = await sendPasswordResetEmail(email);
             if (success) {
-                toast.success("check your email.");
+                toast.success("reset link sent to your email.");
             }
         } catch (error: any) {
             toast.error(error.message);

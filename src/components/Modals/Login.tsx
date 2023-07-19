@@ -82,7 +82,7 @@ const Login = (props: LoginProps) => {
                 </button>
                 <button type="submit" className="w-full text-xs text-end text-white hover:text-brand-orange hover:underline"
                     onClick={handleClickForgotPassword}
-                >Forgor password?</button>
+                >Forgot password?</button>
                 <div>
                     <p className="text-center text-white cursor-pointer">Don't have an account? <a className="text-brand-orange hover:underline"
                         onClick={handleClickSignup}
