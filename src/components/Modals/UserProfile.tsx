@@ -4,13 +4,14 @@ import { auth } from '@/firebase/firebase';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
-import Router from 'next/router';
+import { useRouter } from 'next/router'
 
 interface UserProfileProps {
     onClose: () => void;
 };
 
 const UserProfile = ({ onClose }: UserProfileProps) => {
+    const router = useRouter();
     const [user] = useAuthState(auth);
     const [signOut, loading, error] = useSignOut(auth);
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -25,7 +26,7 @@ const UserProfile = ({ onClose }: UserProfileProps) => {
             if (success) {
                 toast.success('You have signed out');
                 onClose();
-                Router.reload();
+                router.push("/");
             }
         } catch (error: any) {
             toast.error(error.message);
